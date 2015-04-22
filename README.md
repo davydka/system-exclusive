@@ -4,7 +4,7 @@
 
 * Make sure gulp is installed globally: `npm install gulp -g`
 * For deployments, make sure heroku CLI tools are installed: [https://toolbelt.heroku.com/](https://toolbelt.heroku.com/)
-* Clone the repo: `git clone https://github.com/codeandtheory/burger-king-onion-ring-toss-3d.git  folder-name`
+* Clone the repo: `git clone https://github.com/davydka/init.git folder-name`
 * Enter your repo's directory: `cd folder-name`
 * Remove this init from the git remote: `git remote rm origin`
 * If needed, create your new github repo from the command line: `curl -u 'USER' https://api.github.com/user/repos -d '{"name":"repo"}'`
