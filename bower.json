@@ -1,0 +1,20 @@
+{
+  "name": "Init",
+  "version": "1.0.0",
+  "homepage": "https://github.com/davydka/init",
+  "authors": [
+    "davidwhitely <davydka@gmail.com>"
+  ],
+  "description": "Boilerplate for new projects.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}
