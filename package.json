@@ -1,0 +1,29 @@
+{
+  "name": "init",
+  "version": "1.0.0",
+  "description": "Boilerplate for new projects.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-nodemon": "^2.0.2",
+    "gulp-sass": "^1.3.3",
+    "wiredep": "^2.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davydka/init.git"
+  },
+  "author": "David Whitely",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davydka/init/issues"
+  },
+  "homepage": "https://github.com/davydka/init"
+}
