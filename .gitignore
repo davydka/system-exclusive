@@ -5,3 +5,12 @@ bower_components
 public/js/vendor/*/src
 public/js/vendor/*/*bower*
 public/js/vendor/*/*LICENSE*
+public/js/vendor/*/*readme*
+public/js/vendor/*/*package*
+public/js/vendor/*/*index*
+public/js/vendor/*/*cname*
+public/js/vendor/*/*component*
+public/js/vendor/*/*gitignore*
+public/js/vendor/*/*npmignore*
+public/js/vendor/*/*grunt*
+public/js/vendor/*/*.md*

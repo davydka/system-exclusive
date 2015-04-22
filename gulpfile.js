@@ -44,7 +44,7 @@ gulp.task('wiredep', function () {
 });
 
 
-gulp.task('serve', ['nodemon', 'sass'], function () {
+gulp.task('serve', ['nodemon', 'sass', 'wiredep'], function () {
 	gulp.watch('public/css/src/*.scss', ['sass']);
 	gulp.watch('bower.json', ['wiredep']);
 });
