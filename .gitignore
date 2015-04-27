@@ -2,6 +2,7 @@ node_modules
 .sass-cache
 .idea
 bower_components
+public/bower_components
 public/js/vendor/*/src
 public/js/vendor/*/*bower*
 public/js/vendor/*/*LICENSE*
