@@ -5,7 +5,6 @@ var server = http.createServer(app);
 
 
 app.use(express.static('public'));
-//app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 
 server.listen(process.env.PORT || 3000);

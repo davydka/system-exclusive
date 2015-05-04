@@ -13,38 +13,17 @@
 </head>
 <body>
 
+<div class="container">
 
+</div>
 
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/react/react.js"></script>
-<script src="bower_components/JSXTransformer-0.13.2/index.js"></script>
 <!-- endbower -->
 
+<script src="js/application.js"></script>
 <script src="js/main.js"></script>
 
 </body>
-
-<script type="text/jsx">
-	// Define a 'class'
-	var Badge = React.createClass({
-		render: function(){
-			return <button className="btn btn-primary" type="button">
-				{this.props.title} <span className="badge">{this.props.number}</span>
-			</button>
-		}
-	});
-
-	var options = {
-		title:'Sent',
-		number: 12
-	};
-
-	// React, please render this class
-	var element = React.createElement(Badge, options);
-
-	// React, after you render this class, please place it in my body tag
-	React.render(element, document.body);
-</script>
 </html>

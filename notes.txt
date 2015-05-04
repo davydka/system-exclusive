@@ -1,6 +1,9 @@
 React Notes
 https://www.udemy.com/learn-and-understand-reactjs
 
+browserify - server side js compilation solves bower problem
+
+
 jsx
 	stands for javascript extensions
 	html inside javascript
@@ -10,5 +13,8 @@ jsx
 		script type=text/jsx
 			dom class should be called className
 			template can be made dynamic with this.props
-
+			you can nest templates
+			close all html, even if valid html
+			don't wrap attribute values in quotes
+	browserfy modules - allows you to npm install html templates
 
