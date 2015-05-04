@@ -18,3 +18,9 @@ jsx
 			don't wrap attribute values in quotes
 	browserfy modules - allows you to npm install html templates
 
+
+state - for user interaction
+	use setState() - also renders the module!
+
+
+props - for displaying data
