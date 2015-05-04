@@ -1,6 +1,8 @@
 React Notes
 https://www.udemy.com/learn-and-understand-reactjs
 
+get list of venues - http://www.ohmyrockness.com/venues/all
+
 browserify - server side js compilation solves bower problem
 
 
