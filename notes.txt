@@ -1,0 +1,14 @@
+React Notes
+https://www.udemy.com/learn-and-understand-reactjs
+
+jsx
+	stands for javascript extensions
+	html inside javascript
+		not valid js
+	compiles to valid javascript
+		jsx transformer
+		script type=text/jsx
+			dom class should be called className
+			template can be made dynamic with this.props
+
+
