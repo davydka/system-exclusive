@@ -60,7 +60,7 @@ gulp.task('default', function () {
 
 
 	var bundler = watchify(browserify({
-		entries: ['./public/src/app.jsx'],
+		entries: ['./public/js/src/app.jsx'],
 		transform: [reactify],
 		extensions: ['.jsx'],
 		debug: true,
