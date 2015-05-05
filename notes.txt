@@ -1,5 +1,5 @@
 http://www.reddit.com/r/perfectLoops.json
-get list of venues - http://www.ohmyrockness.com/venues/all
+http://infinite-gif.herokuapp.com/
 
 
 React Notes
