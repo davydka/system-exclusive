@@ -4,7 +4,8 @@
   "description": "Boilerplate for new projects.",
   "main": "gulpfile.js",
   "dependencies": {
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "string": "^3.1.1"
   },
   "devDependencies": {
     "browserify": "^10.1.0",

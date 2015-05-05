@@ -9,6 +9,7 @@ https://www.udemy.com/learn-and-understand-reactjs
 
 https://www.codementor.io/reactjs/tutorial/react-js-flux-architecture-tutorial
 
+https://github.com/planningcenter/react-patterns
 
 
 react is cool compared to other javascript frameworks because it can render large amounts of data
@@ -25,7 +26,12 @@ app.jsx kicks off react app
 
 browserify - server side js compilation solves bower problem
 
-
+react component
+	getInitialState
+		store interactive vars here
+	componentDidMount
+	render
+		essentially this is the View
 
 jsx
 	stands for javascript extensions
@@ -42,8 +48,4 @@ jsx
 	browserfy modules - allows you to npm install html templates
 
 
-state - for user interaction
-	use setState() - also renders the module!
 
-
-props - for displaying data
