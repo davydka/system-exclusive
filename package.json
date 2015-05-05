@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "dependencies": {
     "express": "^4.12.3",
-    "string": "^3.1.1"
+    "string": "^3.1.1",
+    "bower": "1.4.x"
   },
   "devDependencies": {
     "browserify": "^10.1.0",
@@ -21,7 +22,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
