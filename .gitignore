@@ -15,3 +15,6 @@ public/js/vendor/*/*gitignore*
 public/js/vendor/*/*npmignore*
 public/js/vendor/*/*grunt*
 public/js/vendor/*/*.md*
+saves/*
+saves2/*
+combined/*
