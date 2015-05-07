@@ -9,7 +9,6 @@ var Data = require('./infinite-data');
 var after = QueryString.parse(location.search.replace("?", ""));
 after = after.after;
 
-console.log(after);
 
 var options = {
 	source: "http://www.reddit.com/r/perfectLoops.json",
