@@ -6,7 +6,11 @@ body {
 	margin-left: 10px;
 }
 
-div video {
+.list-item-holder video.list-item {
 	max-width:100%;
-	height: 80vh;
+	max-height: 80vh;
+}
+
+.list-item-holder img.list-item {
+	width:100%;
 }
