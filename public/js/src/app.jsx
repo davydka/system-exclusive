@@ -23,6 +23,6 @@ var element = React.createElement(Data, options);
 
 React.render(element, document.querySelector('.container'));
 
-
+// Midi only works on Chrome v43
 var midiElement = React.createElement(Midi);
 React.render(midiElement, document.querySelector('.midi'));
