@@ -26,6 +26,9 @@ module.exports = React.createClass({
 					after: result.data.after,
 					images: newImages
 				}, function(){
+					var obj = { Url: location.origin+"?after="+this.state.after };
+					history.pushState(obj, "", obj.Url);
+
 					TweenMax.ticker.addEventListener("tick", this.infiniteScroll.bind(this));
 				});
 			}
