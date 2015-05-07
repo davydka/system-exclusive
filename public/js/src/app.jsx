@@ -5,10 +5,13 @@ var QueryString = require('querystring');
 
 // User built js.
 var Data = require('./infinite-data');
+var Midi = require('./midi-engine');
+
+
+
 
 var after = QueryString.parse(location.search.replace("?", ""));
 after = after.after;
-
 
 var options = {
 	source: "http://www.reddit.com/r/perfectLoops.json",
@@ -19,3 +22,7 @@ var options = {
 var element = React.createElement(Data, options);
 
 React.render(element, document.querySelector('.container'));
+
+
+var midiElement = React.createElement(Midi);
+React.render(midiElement, document.querySelector('.midi'));
