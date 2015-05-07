@@ -17,4 +17,5 @@ public/js/vendor/*/*grunt*
 public/js/vendor/*/*.md*
 saves/*
 saves2/*
+public/combined/*
 combined/*
