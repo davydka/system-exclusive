@@ -15,26 +15,45 @@ Site Url: [http://infinite-gif.herokuapp.com/]()
 
 
 ###Database Structure
-This is a completely wrong implementation of reddit 2 tables style database, but it's fine for this demo.
-[http://www.reddit.com/r/programming/comments/z9sm8/reddits_database_has_only_two_tables/]()
+user table
+sysex table
 
-* thing
+* sysex
 	* id
-* data
-	* thing_id 
-	* key 
-	* value
 	* timestamp
+	* data
+	* description
+	* title
+	* user_id
+	
+* account -> i think user sounds better, but that is a reserved name is postgres, and pluralizing table names is apparently bad practice
+	* id
+	* timestamp
+	* name
+	* pass -> store as text, use node-scrypt to create and verify hash
+	* description
+	* avatar
 	
 | Function | Http   | URL              | Action |
 | -------- | ------ | ---------------- | ------ |
-| CREATE   | Post   | /api/v1/thing    | Create a single thing. |
-| READ     | Get    | /api/v1/thing/id | Get data for a thing. |
-| UPDATE   | Put    | /api/v1/thing/id | Update a single thing. |
-| DELETE   | Delete | /api/v1/thing/id | Delete a single thing. |
+| CREATE   | Post   | /api/v1/sysex    | Create a single sysex. |
+| READ     | Get    | /api/v1/sysex/id | Get data for a sysex. |
+| UPDATE   | Put    | /api/v1/sysex/id | Update a single sysex. |
+| DELETE   | Delete | /api/v1/sysex/id | Delete a single sysex. |
+| -------- | ------ | ---------------- | ------ |
+| CREATE   | Post   | /api/v1/user    | Create a single user. |
+| READ     | Get    | /api/v1/user/id | Get data for a user. |
+| UPDATE   | Put    | /api/v1/user/id | Update a single user. |
+| DELETE   | Delete | /api/v1/user/id | Delete a single user. |
 
-	curl -X POST -d '{"thing_id":"qWyQJ2W"}' http://localhost:3000/api/v1/thing -H "Content-Type: application/json"
-	curl -X GET http://localhost:3000/api/v1/thing/qWyQJ2W
-	curl -X PUT -d '{"comment":"whaaaat"}' http://localhost:3000/api/v1/thing/qWyQJ2W  -H "Content-Type: application/json"
-	curl -X PUT -d '{"vote":1}' http://localhost:3000/api/v1/thing/qWyQJ2W  -H "Content-Type: application/json"
-	curl -X DELETE http://localhost:3000/api/v1/thing/qWyQJ2W
+Sysex API examples
+	curl -X POST -d '{"data":"qWyQJ2W", "description":"This is a description.", "title":"This is a title.", "user_id":"1"}' http://localhost:3000/api/v1/sysex -H "Content-Type: application/json"
+	curl -X GET http://localhost:3000/api/v1/sysex/3
+	curl -X PUT -d '{"data":"abcd", "description":"This is a description.", "title":"This is a title."}' http://localhost:3000/api/v1/sysex/3  -H "Content-Type: application/json"
+	curl -X DELETE http://localhost:3000/api/v1/sysex/3
+	
+User API examples
+	curl -X POST -d '{"name":"David2", "pass":"pass123duh", "description":"This is a description.", "avatar":"://avatars3.githubusercontent.com/u/1128500"}' http://localhost:3000/api/v1/user -H "Content-Type: application/json"
+	curl -X GET http://localhost:3000/api/v1/user/3
+	curl -X PUT -d '{"name":"david", "pass":"pass123duh", "description":"This is a description.", "avatar":"://avatars3.githubusercontent.com/u/1128500"}' http://localhost:3000/api/v1/user/3  -H "Content-Type: application/json"
+	curl -X DELETE http://localhost:3000/api/v1/user/3

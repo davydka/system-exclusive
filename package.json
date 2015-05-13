@@ -7,6 +7,7 @@
     "body-parser": "^1.12.3",
     "bower": "1.4.x",
     "express": "^4.12.3",
+    "mobile-detect": "^1.1.0",
     "pg": "^4.3.0",
     "pg-native": "^1.8.1",
     "querystring": "^0.2.0",
