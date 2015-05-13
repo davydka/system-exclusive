@@ -26,18 +26,3 @@ server.on('listening', function() {
 		//spawn('open', ['http://localhost:'+server.address().port]);
 	}
 });
-
-
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-	if(err) {
-		console.error('error fetching client from pool', err);
-	}
-
-	var query = client.query('SELECT * FROM sysex', function(err, result) {
-		console.log(err);
-		console.log(result);
-	});
-
-
-	console.log('connected to database');
-});
