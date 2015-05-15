@@ -1,6 +1,9 @@
 body {
   margin: 0; }
 
+.dropdown .caret {
+  margin-left: 5px; }
+
 .btn .sub-title {
   margin-left: 10px; }
 
