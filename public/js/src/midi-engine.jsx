@@ -46,10 +46,13 @@ module.exports = React.createClass({
 	},
 
 	midiInputHandler: function(event){
-		console.log(event.data);
-		if(event.data[0] != 144){
-			return;
-		}
+		var hexData = $.map(event.data, function(value, index) {
+			return [value.toString(16)];
+		});
+		console.log(hexData);
+		//if(event.data[0] != 144){
+		//	return;
+		//}
 	},
 
 	midiOutputHandler: function(event){
@@ -64,6 +67,6 @@ module.exports = React.createClass({
 			return <Error message="Your browser does not support the web midi api." />
 		}
 
-		return <Home midi={this.state.midi} setInput={this.setInput} midiInputHandler={this.midiInputHandler} midiOutputHandler={this.midiOutputHandler} />;
+		return <Home midi={this.state.midi} setInput={this.setInput} />;
 	}
 });
