@@ -1,6 +1,10 @@
 node_modules
 .sass-cache
 .idea
+server.crt
+server.csr
+server.key
+server.pass.key
 bower_components
 public/bower_components
 public/js/vendor/*/src
