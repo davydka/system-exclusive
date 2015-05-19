@@ -1,4 +1,5 @@
 var React = require('react');
+var S = require('string');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');
@@ -9,7 +10,9 @@ module.exports = React.createClass({
 	getInitialState: function(){
 		return {
 			index:0,
-			midi: false
+			midi: false,
+			midiActivity: 'ok',
+			panelClassName: 'hide'
 		}
 	},
 
@@ -46,10 +49,22 @@ module.exports = React.createClass({
 	},
 
 	midiInputHandler: function(event){
+		var hexString = '';
 		var hexData = $.map(event.data, function(value, index) {
+			if(index > 10000){
+				return;
+			}
+			hexString += value.toString(16) + " ";
 			return [value.toString(16)];
+		}.bind(this));
+
+		this.setState({
+			midiActivity: hexString,
+			panelClassName: ""
 		});
-		console.log(hexData);
+
+		//console.log(event.data);
+
 		//if(event.data[0] != 144){
 		//	return;
 		//}
@@ -67,6 +82,6 @@ module.exports = React.createClass({
 			return <Error message="Your browser does not support the web midi api." />
 		}
 
-		return <Home midi={this.state.midi} setInput={this.setInput} />;
+		return <Home midi={this.state.midi} midiActivity={this.state.midiActivity} className={this.state.panelClassName} setInput={this.setInput} />;
 	}
 });

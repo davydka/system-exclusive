@@ -38,6 +38,15 @@ module.exports = React.createClass({
 
 			<h3>Output</h3>
 			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiInputs} />
+
+			<div className={this.props.className+" midi-activity-container"}>
+				<h3>Midi Activity</h3>
+				<div className={this.props.className+" panel panel-default"}>
+					<div className="panel-body midi-activity">
+						{this.props.midiActivity}
+					</div>
+				</div>
+			</div>
 		</div>
 	}
 });

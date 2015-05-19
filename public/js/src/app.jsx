@@ -5,7 +5,6 @@ var React = require('react');
 
 var Midi = require('./midi-engine');
 
-
 var midiElement = React.createElement(Midi);
 
 React.render(midiElement, document.querySelector('.container'));
