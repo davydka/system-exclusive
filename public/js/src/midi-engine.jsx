@@ -49,6 +49,11 @@ module.exports = React.createClass({
 	},
 
 	midiInputHandler: function(event){
+		// Clock Signals
+		if(event.data[0] == 248){
+			//console.log("clock");
+			return;
+		}
 		var hexString = '';
 		var hexData = $.map(event.data, function(value, index) {
 			if(index > 10000){
