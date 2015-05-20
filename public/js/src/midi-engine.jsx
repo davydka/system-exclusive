@@ -1,5 +1,5 @@
 var React = require('react');
-var S = require('string');
+//var S = require('string');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');
@@ -37,6 +37,7 @@ module.exports = React.createClass({
 	},
 
 	onSuccessCallback: function( midiAccess ) {
+		console.log(midiAccess);
 		this.setState({
 			midi: midiAccess
 		});
@@ -45,10 +46,13 @@ module.exports = React.createClass({
 	setInput: function(id){
 		var input = this.state.midi.inputs.get(id);
 		input.onmidimessage = this.midiInputHandler;
-		console.log(this.state.midi);
+
+		var obj = { Url: location.origin+"?input="+input.id+"&output" };
+		history.pushState(obj, "", obj.Url);
 	},
 
 	midiInputHandler: function(event){
+		console.log(event.data[0]);
 		// Clock Signals
 		if(event.data[0] == 248){
 			//console.log("clock");
@@ -87,6 +91,10 @@ module.exports = React.createClass({
 			return <Error message="Your browser does not support the web midi api." />
 		}
 
-		return <Home midi={this.state.midi} midiActivity={this.state.midiActivity} className={this.state.panelClassName} setInput={this.setInput} />;
+		if(this.props.initialInput){
+			this.setInput(this.props.initialInput);
+		}
+
+		return <Home midi={this.state.midi} midiActivity={this.state.midiActivity} className={this.state.panelClassName} setInput={this.setInput} initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />;
 	}
 });

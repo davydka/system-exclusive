@@ -6,7 +6,6 @@ module.exports = React.createClass({
 
 	inputChangeHandler: function(childComponent){
 		var selected = $(childComponent.getDOMNode()).find('option:selected');
-		console.log(selected.val());
 		this.props.setInput(selected.val());
 	},
 
@@ -34,10 +33,10 @@ module.exports = React.createClass({
 			<h1>System Exclusive</h1>
 
 			<h3>Input</h3>
-			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} />
+			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
 
 			<h3>Output</h3>
-			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiInputs} />
+			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiInputs} className="midiOutputSelect" initialInput={this.props.initialOutput} initialOutput={this.props.initialOutput} />
 
 			<div className={this.props.className+" midi-activity-container"}>
 				<h3>Midi Activity</h3>

@@ -6,10 +6,11 @@ module.exports = React.createClass({
 	},
 
 	render:function(){
-		return <select onChange={this.onChangeHandler} className="form-control">
+		return <select onChange={this.onChangeHandler} className={this.props.className +" form-control"}>
 				<option value="false">{this.props.initialText}</option>
 				{this.props.items.map(function(result) {
-					return <option value={result.id}>{result.text}</option>
+					//console.log(this.props.initialInput);
+					return <option value={result.id} selected={this.props.initialInput == result.id}>{result.text}</option>
 				}.bind(this))}
 			</select>;
 	}
