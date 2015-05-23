@@ -22,3 +22,66 @@ body {
 .list-item-holder img.list-item {
 	width:100%;
 }
+
+.panel-moog {
+	border-color: #ddd;
+
+	& > .panel-heading {
+		color: #fff;
+		text-align: center;
+		background-color: #333;
+		border-color: #ddd;
+
+		+ .panel-collapse > .panel-body {
+			border-top-color: #ddd;
+		}
+		.badge {
+			color: #f5f5f5;
+			background-color: #333;
+		}
+	}
+	& > .panel-footer {
+		+ .panel-collapse > .panel-body {
+			border-bottom-color: #ddd;
+		}
+	}
+}
+
+.control {
+	.control-title {
+		font-size: 14px;
+		text-align: center;
+	}
+
+	.control-body {
+		text-align: center;
+	}
+
+}
+
+.control-knob {
+
+}
+
+.knob-small {
+	.control-title {
+		font-size: 12px;
+	}
+
+	.control-body {
+		font-size: 12px;
+	}
+
+	canvas {
+		width:25px !important;
+		height:25px !important;
+	}
+}
+
+//.panel-moog.panel-lfo {
+//	border-top-right-radius: 0;
+//
+//	& > .panel-heading {
+//		border-top-right-radius: 0;
+//	}
+//}

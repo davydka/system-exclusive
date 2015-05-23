@@ -1,5 +1,6 @@
 // NPM installed js
 var React = require('react');
+
 //var MobileDetect = require('mobile-detect');
 var QueryString = require('querystring');
 
