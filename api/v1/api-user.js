@@ -8,6 +8,7 @@ module.exports = function(app){
 	app.post('/api/v1/user', jsonParser, function (req, res){
 		var results = [];
 		var name = req.body.name;
+		// todo - bcrypt-nodejs
 		var pass = req.body.pass;
 		var description = req.body.description;
 		var avatar = req.body.avatar;
