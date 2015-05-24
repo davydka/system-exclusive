@@ -1,6 +1,8 @@
 var React = require('react');
 
 var Select	 = require('../components/select');
+var Dial	 = require('../components/dial');
+var Panel 	 = require('../components/panel');
 
 module.exports = React.createClass({
 
@@ -67,116 +69,97 @@ module.exports = React.createClass({
 			<h3 spacing></h3>
 			<div className="panel-container">
 
-				<div className="panel panel-moog panel-lfo">
-					<div className="panel-heading">
-						<h3 className="panel-title">LFO</h3>
-					</div>
-					<div className="panel-body">
-						<div className="control control-knob lfo-rate">
-							<h4 className="control-title">RATE</h4>
-							<div className="control-body">
-								<canvas id="lfoRate" data-nx="dial"></canvas>
-							</div>
+				<Panel
+					panelTitle="LFO"
+					panelClassName="panel-moog panel-lfo"
+					>
+					<Dial
+						controlTitle="RATE"
+						controlId="lfoRate"
+						controlClass=""
+						/>
+
+					<Dial
+						controlTitle="WAVE"
+						controlId="lfoWave"
+						controlClass=""
+						/>
+
+					<hr/>
+
+					<Dial
+						controlTitle="FINE TUNE"
+						controlId="fineTune"
+						controlClass="dial-small"
+						/>
+
+					<Dial
+						controlTitle="GLIDE RATE"
+						controlId="glideRate"
+						controlClass="dial-small"
+						/>
+				</Panel>
+
+				<Panel
+					panelTitle="MODULATION BUSSES"
+					panelClassName="panel-moog panel-modulation-busses">
+
+					<div className="row">
+						<div className="col-sm-6">
+							<Dial
+								controlTitle="SOURCE"
+								controlId="mod1Source"
+								controlClass=""
+								/>
+
+							<Dial
+								controlTitle="DESTINATION"
+								controlId="mod1Destination"
+								controlClass=""
+								/>
+
+							<Dial
+								controlTitle="CONTROLLER"
+								controlId="mod1Controller"
+								controlClass=""
+								/>
+
+							<Dial
+								controlTitle="AMOUNT"
+								controlId="mod1Amount"
+								controlClass="dial-small"
+								/>
 						</div>
+						<div className="col-sm-6">
+							<Dial
+								controlTitle="SOURCE"
+								controlId="mod2Source"
+								controlClass=""
+								/>
 
-						<div className="control control-knob lfo-wave">
-							<h4 className="control-title">WAVE</h4>
-							<div className="control-body">
-								<canvas id="lfoWave" data-nx="dial"></canvas>
-							</div>
-						</div>
+							<Dial
+								controlTitle="DESTINATION"
+								controlId="mod2Destination"
+								controlClass=""
+								/>
 
-						<hr/>
+							<Dial
+								controlTitle="CONTROLLER"
+								controlId="mod2Controller"
+								controlClass=""
+								/>
 
-						<div className="control control-knob knob-small fine-tune">
-							<h4 className="control-title">FINE TUNE</h4>
-							<div className="control-body">
-								<canvas id="fineTune" data-nx="dial"></canvas>
-							</div>
-						</div>
-
-						<div className="control control-knob knob-small glide-rate">
-							<h4 className="control-title">GLIDE RATE</h4>
-							<div className="control-body">
-								<canvas id="glideRate" data-nx="dial"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div className="panel panel-moog panel-lfo">
-					<div className="panel-heading">
-						<h3 className="panel-title">MODULATION BUSSES</h3>
-					</div>
-					<div className="panel-body">
-						<div className="row">
-							<div className="col-sm-6">
-								<div className="control control-knob mod1-source">
-									<h4 className="control-title">SOURCE</h4>
-									<div className="control-body">
-										<canvas id="mod1Source" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob mod1-destination">
-									<h4 className="control-title">DESTINATION</h4>
-									<div className="control-body">
-										<canvas id="mod1Destination" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob mod1-controller">
-									<h4 className="control-title">CONTROLLER</h4>
-									<div className="control-body">
-										<canvas id="mod1Controller" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob knob-small mod1-amount">
-									<h4 className="control-title">AMOUNT</h4>
-									<div className="control-body">
-										<canvas id="mod1Amount" data-nx="dial"></canvas>
-									</div>
-								</div>
-							</div>
-
-							<div className="col-sm-6">
-								<div className="control control-knob mod2-source">
-									<h4 className="control-title">SOURCE</h4>
-									<div className="control-body">
-										<canvas id="mod2Source" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob mod2-destination">
-									<h4 className="control-title">DESTINATION</h4>
-									<div className="control-body">
-										<canvas id="mod2Destination" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob mod2-controller">
-									<h4 className="control-title">CONTROLLER</h4>
-									<div className="control-body">
-										<canvas id="mod2Controller" data-nx="dial"></canvas>
-									</div>
-								</div>
-
-								<div className="control control-knob knob-small mod2-amount">
-									<h4 className="control-title">AMOUNT</h4>
-									<div className="control-body">
-										<canvas id="mod2Amount" data-nx="dial"></canvas>
-									</div>
-								</div>
-							</div>
-
+							<Dial
+								controlTitle="AMOUNT"
+								controlId="mod2Amount"
+								controlClass="dial-small"
+								/>
 						</div>
 					</div>
-				</div>
-
+				</Panel>
 			</div>
 
-			<div className="panel panel-default">
+			<div className="hide panel panel-default">
 				<img src="images/panel.jpg" alt=""/>
 			</div>
 		</div>

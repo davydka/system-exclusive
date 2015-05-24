@@ -38,10 +38,10 @@ body {
 .control .control-body {
   text-align: center; }
 
-.knob-small .control-title {
+.dial-small .control-title {
   font-size: 12px; }
-.knob-small .control-body {
+.dial-small .control-body {
   font-size: 12px; }
-.knob-small canvas {
+.dial-small canvas {
   width: 25px !important;
   height: 25px !important; }
