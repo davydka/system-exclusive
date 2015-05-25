@@ -13,6 +13,10 @@ if(typeof input == 'undefined'){
 	input = Cookie.load('input');
 }
 
+if(typeof output == 'undefined'){
+	output = Cookie.load('output');
+}
+
 var options = {
 	initialInput: input,
 	initialOutput: output

@@ -17,6 +17,15 @@ body {
 .list-item-holder img.list-item {
   width: 100%; }
 
+button.play .glyphicon, button.record .glyphicon {
+  margin-right: 5px; }
+
+button.recording {
+  background-color: #902524; }
+
+button.recording:hover {
+  background-color: #6d1c1c; }
+
 .panel-moog {
   border-color: #ddd; }
   .panel-moog > .panel-heading {

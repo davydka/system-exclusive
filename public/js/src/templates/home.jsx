@@ -1,4 +1,5 @@
 var React = require('react');
+var Sizeof = require('sizeof');
 
 var Select	 = require('../components/select');
 var Dial	 = require('../components/dial');
@@ -28,8 +29,20 @@ module.exports = React.createClass({
 	},
 
 	outputChangeHandler: function(childComponent){
-		console.log(childComponent);
-		console.log("output");
+		var selected = $(childComponent.getDOMNode()).find('option:selected');
+		this.props.setOutput(selected.val());
+	},
+
+	handlePlayClick: function(childComponent){
+		//console.log(childComponent);
+		React.findDOMNode(this.refs.playButton).blur();
+		this.props.handlePlayClick();
+	},
+
+	handleRecordClick: function(childComponent){
+		//console.log(childComponent);
+		React.findDOMNode(this.refs.recordButton).blur();
+		this.props.handleRecordClick();
 	},
 
 	render: function(){
@@ -47,10 +60,34 @@ module.exports = React.createClass({
 
 		});
 
+		//console.log(this.roughSizeOfObject(this.props.sysex));
+		//console.log(this.props.sysex);
 		var sysexItems = this.props.sysex.map(function(item, index){
 			//console.log(item);
 			return <div>New Sysex Message {index+1}</div>
 		});
+
+		if(!this.props.recording){
+			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="record btn btn-danger">
+				<span className="glyphicon glyphicon-plus"></span>
+				Record Sysex
+			</button>;
+		} else {
+			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="recording record btn btn-danger">
+				<span className="glyphicon glyphicon-stop"></span>
+				Recording Sysex
+			</button>;
+		}
+
+		//if(this.props.sysex.length){
+		if(1){
+			var playButton = <button ref="playButton" onClick={this.handlePlayClick} className="btn btn-success play">
+				<span className="glyphicon glyphicon-play" ></span>
+				Play
+			</button>
+		} else {
+			var playButton = null;
+		}
 
 		return <div>
 			<h1>System Exclusive</h1>
@@ -59,7 +96,7 @@ module.exports = React.createClass({
 			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
 
 			<h3>Output</h3>
-			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiInputs} className="midiOutputSelect" initialInput={this.props.initialOutput} initialOutput={this.props.initialOutput} />
+			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiOutputs} className="midiOutputSelect" initialInput={this.props.initialOutput} initialOutput={this.props.initialOutput} />
 
 			<div className={this.props.className+" midi-activity-container"}>
 				<h3>Midi Activity</h3>
@@ -70,8 +107,11 @@ module.exports = React.createClass({
 				</div>
 			</div>
 
-			<div>Sysex Messages in buffer: {this.props.sysex.length}</div>
-			{sysexItems}
+			<h3 spacing></h3>
+			{recordButton}
+			<div>Sysex Messages Received: {this.props.sysex.length}</div>
+			<div>Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
+			{playButton}
 
 			<h3 spacing></h3>
 			<div className="panel-container">

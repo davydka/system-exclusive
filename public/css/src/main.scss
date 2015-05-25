@@ -23,6 +23,19 @@ body {
 	width:100%;
 }
 
+button.play,
+button.record {
+	.glyphicon{
+		margin-right:5px;
+	}
+}
+button.recording {
+	background-color: #902524;
+}
+button.recording:hover {
+	background-color: #6d1c1c;
+}
+
 .panel-moog {
 	border-color: #ddd;
 
