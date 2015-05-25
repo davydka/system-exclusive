@@ -21,6 +21,8 @@ app.use(stormpath.init(app, {
 	secretKey:		process.env.STORMPATH_SECRET_KEY,
 	application:	process.env.STORMPATH_URL,
 	sessionDuration: 1000 * 60 * 525949, // year
+	registrationView: __dirname + '/authentication-views/register.jade',
+	loginView: __dirname + '/authentication-views/login.jade',
 	postRegistrationHandler: function(account, req, res, next) {
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
 			var query = client.query('INSERT INTO account (id, ts, name, pass, email, description, avatar) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4, $5) RETURNING id', [account.givenName +' ' +account.surname , '', account.email, '', '']);
