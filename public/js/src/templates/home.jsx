@@ -9,6 +9,7 @@ var ButtonPlay		= require('../components/button-play');
 var ButtonSave		= require('../components/button-save');
 var ButtonDownload	= require('../components/button-download');
 var AccountGroup	= require('../components/account-group');
+var TableData		= require('../components/table-data');
 
 module.exports = React.createClass({
 
@@ -47,9 +48,8 @@ module.exports = React.createClass({
 		this.props.handlePlayClick(this.props.sysex);
 	},
 
-	handleInlinePlayClick: function(index){
-		console.log(this.props.serverSysex[index]);
-		this.props.handlePlayClick(this.props.serverSysex[index].data);
+	handleInlinePlayClick: function(data){
+		this.props.handlePlayClick(data);
 	},
 
 
@@ -86,58 +86,6 @@ module.exports = React.createClass({
 			midiOutputs.push({"text":key.name, "id":key.id});
 		});
 
-		if(this.props.serverSysex.length){
-			var rows = this.props.serverSysex.map(function(item, index){
-				return <tr>
-					<td>{item.id}</td>
-					<td>{item.title}</td>
-					<td>{item.description}</td>
-					<td>
-						<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
-							<span className="glyphicon glyphicon-play" ></span>
-							Play
-						</button>
-
-						<button ref="downloadButton" onClick={this.handleInlineDownloadClick} className="btn btn-primary download btn-xs">
-							<span className="glyphicon glyphicon-download-alt" ></span>
-							Download
-						</button>
-
-						<button ref="deleteButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
-							<span className="glyphicon glyphicon-globe" ></span>
-							Share
-						</button>
-
-						<button ref="deleteButton" onClick={this.handleInlineEditClick} className="btn btn-default edit btn-xs">
-							<span className="glyphicon glyphicon-pencil" ></span>
-							Edit
-						</button>
-					</td>
-				</tr>
-			}.bind(this));
-
-			var dataTable = <table className="data-table table table-hover table-striped">
-				<thead>
-				<tr>
-					<th>ID</th>
-					<th>Title</th>
-					<th>Description</th>
-					<th>
-
-					</th>
-				</tr>
-				</thead>
-				<tbody>
-
-				{rows}
-
-				</tbody>
-			</table>
-		} else {
-			var datTable = null;
-		}
-
-
 
 
 
@@ -172,7 +120,7 @@ module.exports = React.createClass({
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 			</div>
 
-			{dataTable}
+			<TableData serverSysex = {this.props.serverSysex} handlePlayClick={this.handleInlinePlayClick} />
 
 			<br/>
 			<div className="panel-container">
