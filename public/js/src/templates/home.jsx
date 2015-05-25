@@ -70,8 +70,6 @@ module.exports = React.createClass({
 
 		});
 
-		//console.log(this.roughSizeOfObject(this.props.sysex));
-		//console.log(this.props.sysex);
 		var sysexItems = this.props.sysex.map(function(item, index){
 			//console.log(item);
 			return <div>New Sysex Message {index+1}</div>
@@ -100,7 +98,7 @@ module.exports = React.createClass({
 
 		if(this.props.sysex.length){
 			var saveButton = <button ref="saveButton" onClick={this.handleSaveClick} className="btn btn-primary save">
-				<span className="glyphicon glyphicon-upload" ></span>
+				<span className="glyphicon glyphicon-cloud-upload" ></span>
 				Save Sysex
 			</button>
 		} else {
@@ -108,13 +106,66 @@ module.exports = React.createClass({
 		}
 
 		if(this.props.sysex.length){
-			var downloadButton = <button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary save">
+			var downloadButton = <button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary download">
 				<span className="glyphicon glyphicon-download-alt" ></span>
 				Download Sysex
 			</button>
 		} else {
 			var downloadButton = null;
 		}
+
+		if(this.props.serverSysex.length){
+			var rows = this.props.serverSysex.map(function(item, index){
+				return <tr>
+					<td>{item.id}</td>
+					<td>{item.title}</td>
+					<td>{item.description}</td>
+					<td>
+						<button ref="playButton" onClick={this.handlePlayClick} className="btn btn-success play btn-xs">
+							<span className="glyphicon glyphicon-play" ></span>
+							Play
+						</button>
+
+						<button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary download btn-xs">
+							<span className="glyphicon glyphicon-download-alt" ></span>
+							Download Sysex
+						</button>
+
+						<button ref="deleteButton" onClick={this.handleShareClick} className="btn btn-default share btn-xs">
+							<span className="glyphicon glyphicon-globe" ></span>
+							Share Sysex
+						</button>
+
+						<button ref="deleteButton" onClick={this.handleEditClick} className="btn btn-default edit btn-xs">
+							<span className="glyphicon glyphicon-pencil" ></span>
+							Edit Sysex
+						</button>
+					</td>
+				</tr>
+			});
+
+			var dataTable = <table className="table table-hover table-striped">
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>
+
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+
+				{rows}
+
+				</tbody>
+			</table>
+		} else {
+			var datTable = null;
+		}
+
+
 
 		return <div>
 			<h1>System Exclusive</h1>
@@ -137,11 +188,14 @@ module.exports = React.createClass({
 			<div className="play-controls">
 				<h3 spacing></h3>
 				{recordButton}
-				<div>Sysex Messages Received: {this.props.sysex.length}</div>
-				<div>Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 				{playButton}
 				{saveButton}
 				{downloadButton}
+				<h3 spacing></h3>
+				<div className="well well-sm">Sysex Messages Received: {this.props.sysex.length}</div>
+				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
+
+				{dataTable}
 			</div>
 
 			<h3 spacing></h3>

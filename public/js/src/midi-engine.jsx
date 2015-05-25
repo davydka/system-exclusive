@@ -1,5 +1,6 @@
 var React = require('react');
 var Cookie = require('react-cookie');
+var S = require('string');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');
@@ -28,7 +29,7 @@ module.exports = React.createClass({
 			panelClassName: 'hide',
 			userId: Cookie.load('u'),
 			recording: false,
-			recordedSysex: [],
+			serverSysex: [],
 			sysex: []
 		}
 	},
@@ -41,18 +42,40 @@ module.exports = React.createClass({
 						userId:data.id
 					});
 					Cookie.save('u', data.id);
+					this.getUserSysex();
+				} else {
+					Cookie.remove('u');
 				}
 			}.bind(this));
 		} else {
-			$.get('/api/v1/sysex/user/'+this.state.userId, function(data){
-				console.log(data);
-			});
+			this.getUserSysex();
 		}
-		if(this.isMounted()) {
 
+		if(this.isMounted()) {
 			// sysex: true brings up a security dialog, see: http://www.w3.org/TR/webmidi/#security-and-privacy-considerations-of-midi
 			navigator.requestMIDIAccess({ sysex: true }).then(this.onSuccessCallback, this.onErrorCallback);
 		}
+	},
+
+	getUserSysex: function(){
+		$.get('/api/v1/sysex/user/'+this.state.userId, function(data){
+			if(typeof data !='object'){
+				Cookie.remove('u');
+				return;
+			}
+			// Data is coming back as a Postgres array, so we clean it up here.
+			data.map(function(item, index){
+				var cleanData = item.data;
+				cleanData = S(cleanData).replaceAll('{', '[').s;
+				cleanData = S(cleanData).replaceAll('}', ']').s;
+
+				return item.data = JSON.parse(cleanData);
+			});
+
+			this.setState({
+				serverSysex: data
+			});
+		}.bind(this));
 	},
 
 	nexusOnload: function(){
@@ -96,10 +119,9 @@ module.exports = React.createClass({
 				data: this.state.sysex
 			}),
 			success: function (data) {
-				console.log(data);
-				$.get('/api/v1/sysex/user/'+this.state.user_id, function(data){
+				//$.get('/api/v1/sysex/user/'+this.state.user_id, function(data){
 					console.log(data);
-				});
+				//});
 			}
 		});
 	},
@@ -131,6 +153,7 @@ module.exports = React.createClass({
 			midi: midiAccess,
 			recording: true,
 			sysex: [[240, 0, 32, 50, 127, 21, 52, 84, 122, 63, 100, 46, 15, 81, 12, 9, 65, 81, 40, 15, 40, 118, 48, 38, 104, 82, 99, 52, 124, 34, 70, 86, 54, 35, 54, 78, 32, 54, 119, 13, 107, 37, 43, 38, 24, 35, 57, 46, 113, 94, 91, 47, 96, 66, 77, 57, 81, 97, 74, 127, 77, 45, 94, 93, 50, 120, 117, 88, 107, 59, 63, 90, 18, 127, 6, 30, 28, 126, 121, 68, 68, 23, 21, 7, 88, 29, 21, 10, 123, 49, 93, 45, 58, 29, 127, 16, 71, 69, 92, 46, 247]],
+			//sysex: [],
 			output: midiAccess.outputs.get(this.props.initialOutput)
 		});
 
@@ -227,8 +250,9 @@ module.exports = React.createClass({
 			initialInput={this.props.initialInput}
 			initialOutput={this.props.initialOutput}
 			sysex = {this.state.sysex}
-			handleRecordClick={this.handleRecordClick}
+			serverSysex = {this.state.serverSysex}
 			recording={this.state.recording}
+			handleRecordClick={this.handleRecordClick}
 			handlePlayClick={this.handlePlayClick}
 			handleSaveClick={this.handleSaveClick}
 			handleDownloadClick={this.handleDownloadClick}
