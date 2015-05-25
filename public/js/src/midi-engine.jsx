@@ -1,4 +1,5 @@
 var React = require('react');
+var Cookie = require('react-cookie');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');
@@ -17,16 +18,40 @@ module.exports = React.createClass({
 	timeline: '',
 	lastTime: 0,
 
+
 	getInitialState: function(){
 		return {
 			index:0,
 			midi: false,
 			midiActivity: '',
-			panelClassName: 'hide'
+			panelClassName: 'hide',
+			userId: Cookie.load('u'),
+			sysex: []
 		}
 	},
 
 	componentDidMount: function(){
+		if(typeof this.state.userId == 'undefined'){
+			//$.ajax('/me', {
+			//	type: 'get'
+			//
+			//}).done(function(data, statusText, xhr){
+			//	console.log(xhr);
+			//	var status = xhr.status;                //200
+			//	var head = xhr.getAllResponseHeaders(); //Detail header info
+			//
+			//	console.log(head);
+			//}.bind(this));
+			$.get('/me', function(data){
+				if(typeof data =='object'){
+					this.setState({
+						userId:data.id
+					});
+					Cookie.save('u', data.id);
+				}
+
+			}.bind(this));
+		}
 		if(this.isMounted()) {
 			// sysex: true brings up a security dialog, see: http://www.w3.org/TR/webmidi/#security-and-privacy-considerations-of-midi
 			navigator.requestMIDIAccess({ sysex: true }).then(this.onSuccessCallback, this.onErrorCallback);
@@ -70,12 +95,13 @@ module.exports = React.createClass({
 		var input = this.state.midi.inputs.get(id);
 		input.onmidimessage = this.midiInputHandler;
 
-		var obj = { Url: location.origin+"?input="+input.id+"&output" };
-		history.pushState(obj, "", obj.Url);
+		//var obj = { Url: location.origin+"?input="+input.id+"&output" };
+		//history.pushState(obj, "", obj.Url);
+		Cookie.save('input', input.id);
 	},
 
 	midiInputHandler: function(event){
-		//console.log(event);
+		//console.log(event.data[0]);
 		// Clock Signals
 		if(event.data[0] == 250){
 			this.clockCount = 1;
@@ -103,6 +129,17 @@ module.exports = React.createClass({
 			dispatchEvent(clockTick);
 			return;
 		}
+
+		// Sysex Message
+		if(event.data[0] == 240){
+			this.setState({
+				sysex: this.state.sysex.concat([event.data])
+			});
+			console.log(event.data[0]);
+			console.log(event.data[event.data.length-1]);
+			return;
+		}
+
 		//if(event.data[0] != 144){
 		//	return;
 		//}
@@ -134,7 +171,7 @@ module.exports = React.createClass({
 			nexusOnload = {this.nexusOnload}
 			initialInput={this.props.initialInput}
 			initialOutput={this.props.initialOutput}
-
+			sysex = {this.state.sysex}
 			/>;
 	}
 });

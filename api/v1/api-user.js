@@ -1,6 +1,7 @@
 var pg = require('pg').native;
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+var stormpath = require('express-stormpath');
 
 module.exports = function(app){
 
@@ -36,7 +37,7 @@ module.exports = function(app){
 	});
 
 // Read
-	app.get('/api/v1/user/:account_id', function (req, res) {
+	app.get('/api/v1/user/:account_id', stormpath.loginRequired, function (req, res) {
 		var results = [];
 		var id = req.params.account_id;
 

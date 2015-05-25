@@ -30,6 +30,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 			"ts				timestamp without time zone default (now() at time zone 'utc'), " +
 			"name			text unique, " +
 			"pass			text, " +
+			"email			text, " +
 			"description	text, " +
 			"avatar			text " +
 		")",

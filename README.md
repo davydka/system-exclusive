@@ -29,6 +29,7 @@ Site Url: [http://infinite-gif.herokuapp.com/]()
 	* timestamp
 	* name
 	* pass -> store as text, use node-scrypt to create and verify hash
+	* email
 	* description
 	* avatar
 	
@@ -36,6 +37,7 @@ Site Url: [http://infinite-gif.herokuapp.com/]()
 | -------- | ------ | ---------------- | ------ |
 | CREATE   | Post   | /api/v1/sysex    | Create a single sysex. |
 | READ     | Get    | /api/v1/sysex/id | Get data for a sysex. |
+| READ     | Get    | /api/v1/sysex/user/user_id | Get sysex files for a user. |
 | UPDATE   | Put    | /api/v1/sysex/id | Update a single sysex. |
 | DELETE   | Delete | /api/v1/sysex/id | Delete a single sysex. |
 | -------- | ------ | ---------------- | ------ |
@@ -48,11 +50,12 @@ Site Url: [http://infinite-gif.herokuapp.com/]()
 
 	curl -X POST -d '{"data":"qWyQJ2W", "description":"This is a description.", "title":"This is a title.", "user_id":"1"}' http://localhost:3000/api/v1/sysex -H "Content-Type: application/json"
 	curl -X GET http://localhost:3000/api/v1/sysex/3
+	curl -X GET http://localhost:3000/api/v1/sysex/user/1
 	curl -X PUT -d '{"data":"abcd", "description":"This is a description.", "title":"This is a title."}' http://localhost:3000/api/v1/sysex/3  -H "Content-Type: application/json"
 	curl -X DELETE http://localhost:3000/api/v1/sysex/3
 	
 ######User API examples
-	curl -X POST -d '{"name":"David2", "pass":"pass123duh", "description":"This is a description.", "avatar":"://avatars3.githubusercontent.com/u/1128500"}' http://localhost:3000/api/v1/user -H "Content-Type: application/json"
+	curl -X POST -d '{"name":"David2", "pass":"pass123duh", "email":"davydka@gmail.com", "description":"This is a description.", "avatar":"://avatars3.githubusercontent.com/u/1128500"}' http://localhost:3000/api/v1/user -H "Content-Type: application/json"
 	curl -X GET http://localhost:3000/api/v1/user/3
 	curl -X PUT -d '{"name":"david", "pass":"pass123duh", "description":"This is a description.", "avatar":"://avatars3.githubusercontent.com/u/1128500"}' http://localhost:3000/api/v1/user/3  -H "Content-Type: application/json"
 	curl -X DELETE http://localhost:3000/api/v1/user/3

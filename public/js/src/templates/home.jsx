@@ -47,6 +47,11 @@ module.exports = React.createClass({
 
 		});
 
+		var sysexItems = this.props.sysex.map(function(item, index){
+			//console.log(item);
+			return <div>New Sysex Message {index+1}</div>
+		});
+
 		return <div>
 			<h1>System Exclusive</h1>
 
@@ -65,6 +70,8 @@ module.exports = React.createClass({
 				</div>
 			</div>
 
+			<div>Sysex Messages in buffer: {this.props.sysex.length}</div>
+			{sysexItems}
 
 			<h3 spacing></h3>
 			<div className="panel-container">

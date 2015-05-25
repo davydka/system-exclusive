@@ -1,6 +1,7 @@
 var pg = require('pg').native;
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+var stormpath = require('express-stormpath');
 
 module.exports = function(app){
 
@@ -41,6 +42,33 @@ module.exports = function(app){
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
 			var query = client.query('SELECT * FROM sysex where id = $1', [id]);
+
+			// Stream results back one row at a time
+			query.on('row', function (row) {
+				results.push(row);
+			});
+
+			// After all data is returned, close connection and return results
+			query.on('end', function () {
+				client.end();
+				return res.json(results);
+
+			});
+
+			// Handle Errors
+			if (err) {
+				console.log(err);
+			}
+		});
+	});
+
+//Read All
+	app.get('/api/v1/sysex/user/:user_id', stormpath.loginRequired, function (req, res) {
+		var results = [];
+		var id = req.params.user_id;
+
+		pg.connect(process.env.DATABASE_URL, function(err, client) {
+			var query = client.query('SELECT * FROM sysex where user_id = $1', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {
