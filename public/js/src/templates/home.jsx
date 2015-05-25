@@ -45,6 +45,16 @@ module.exports = React.createClass({
 		this.props.handleRecordClick();
 	},
 
+	handleSaveClick: function(childComponent){
+		React.findDOMNode(this.refs.saveButton).blur();
+		this.props.handleSaveClick();
+	},
+
+	handleDownloadClick: function(childComponent){
+		React.findDOMNode(this.refs.downloadButton).blur();
+		this.props.handleSaveClick();
+	},
+
 	render: function(){
 		//console.log(this.props.midi.inputs);
 
@@ -70,23 +80,40 @@ module.exports = React.createClass({
 		if(!this.props.recording){
 			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="record btn btn-danger">
 				<span className="glyphicon glyphicon-plus"></span>
-				Record Sysex
+				Record System Exclusive Messages
 			</button>;
 		} else {
 			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="recording record btn btn-danger">
 				<span className="glyphicon glyphicon-stop"></span>
-				Recording Sysex
+				Listening...
 			</button>;
 		}
 
-		//if(this.props.sysex.length){
-		if(1){
+		if(this.props.sysex.length){
 			var playButton = <button ref="playButton" onClick={this.handlePlayClick} className="btn btn-success play">
 				<span className="glyphicon glyphicon-play" ></span>
 				Play
 			</button>
 		} else {
 			var playButton = null;
+		}
+
+		if(this.props.sysex.length){
+			var saveButton = <button ref="saveButton" onClick={this.handleSaveClick} className="btn btn-primary save">
+				<span className="glyphicon glyphicon-upload" ></span>
+				Save Sysex
+			</button>
+		} else {
+			var saveButton = null;
+		}
+
+		if(this.props.sysex.length){
+			var downloadButton = <button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary save">
+				<span className="glyphicon glyphicon-download-alt" ></span>
+				Download Sysex
+			</button>
+		} else {
+			var downloadButton = null;
 		}
 
 		return <div>
@@ -107,11 +134,15 @@ module.exports = React.createClass({
 				</div>
 			</div>
 
-			<h3 spacing></h3>
-			{recordButton}
-			<div>Sysex Messages Received: {this.props.sysex.length}</div>
-			<div>Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
-			{playButton}
+			<div className="play-controls">
+				<h3 spacing></h3>
+				{recordButton}
+				<div>Sysex Messages Received: {this.props.sysex.length}</div>
+				<div>Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
+				{playButton}
+				{saveButton}
+				{downloadButton}
+			</div>
 
 			<h3 spacing></h3>
 			<div className="panel-container">

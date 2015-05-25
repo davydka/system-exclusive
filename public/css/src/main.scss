@@ -23,8 +23,9 @@ body {
 	width:100%;
 }
 
-button.play,
-button.record {
+.play-controls button {
+	margin-right:14px;
+
 	.glyphicon{
 		margin-right:5px;
 	}

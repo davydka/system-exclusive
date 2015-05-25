@@ -13,23 +13,54 @@ module.exports = function(app){
 		var title = req.body.title;
 		var user_id = req.body.user_id;
 
+		if(typeof req.user == 'undefined'){
+			res.status(401);
+			return res.send('Not Authenticated.');
+		}
+
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('INSERT INTO sysex (id, ts, data, description, title, user_id) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4) RETURNING id', [data, description, title, user_id]);
+			var results = [];
+			var query = client.query('SELECT * FROM account where email = $1', [req.user.email]);
 
 			// Stream results back one row at a time
-			query.on('row', function(row) {
+			query.on('row', function (row) {
 				results.push(row);
 			});
 
 			// After all data is returned, close connection and return results
-			query.on('end', function() {
+			query.on('end', function () {
 				client.end();
-				return res.json(results);
+
+				if(results.length){
+					user_id = results[0].id;
+					console.log([data, description, title, user_id]);
+					pg.connect(process.env.DATABASE_URL, function(err, client) {
+						var insertResults = [];
+						var query = client.query('INSERT INTO sysex (id, ts, data, description, title, user_id) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4) RETURNING id', [data, description, title, user_id]);
+
+						// Stream results back one row at a time
+						query.on('row', function(row) {
+							insertResults.push(row);
+						});
+
+						// After all data is returned, close connection and return results
+						query.on('end', function() {
+							client.end();
+							return res.json(insertResults);
+
+						});
+
+						// Handle Errors
+						if(err) {
+							console.log(err);
+						}
+					});
+				}
 
 			});
 
 			// Handle Errors
-			if(err) {
+			if (err) {
 				console.log(err);
 			}
 		});
@@ -135,6 +166,11 @@ module.exports = function(app){
 	app.delete('/api/v1/sysex/:sysex_id', function (req, res) {
 		var results = [];
 		var id = req.params.sysex_id;
+
+		if(typeof req.user == 'undefined'){
+			res.status(401);
+			return res.send('Not Authenticated.');
+		}
 
 		// Get a Postgres client from the connection pool
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {

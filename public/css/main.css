@@ -17,8 +17,10 @@ body {
 .list-item-holder img.list-item {
   width: 100%; }
 
-button.play .glyphicon, button.record .glyphicon {
-  margin-right: 5px; }
+.play-controls button {
+  margin-right: 14px; }
+  .play-controls button .glyphicon {
+    margin-right: 5px; }
 
 button.recording {
   background-color: #902524; }

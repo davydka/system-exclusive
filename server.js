@@ -40,6 +40,7 @@ app.use(stormpath.init(app, {
 	}
 }));
 
+
 app.get('/me', stormpath.loginRequired, function(req, res) {
 	var user = req.user;
 
@@ -55,7 +56,6 @@ app.get('/me', stormpath.loginRequired, function(req, res) {
 		// After all data is returned, close connection and return results
 		query.on('end', function () {
 			client.end();
-			//req.user.id = 1;
 
 			console.log(results[0]);
 			return res.json({

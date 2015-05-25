@@ -24,7 +24,7 @@ gulp.task('nodemon', function (cb) {
 		script: 'server.js',
 
 		// watch core server file(s) that require server restart on change
-		watch: ['server.js'],
+		watch: ['server.js', 'api/v1/api-sysex.js'],
 
 		stdout: true,
 
