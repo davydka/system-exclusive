@@ -59,9 +59,20 @@ module.exports = React.createClass({
 		this.props.handleRecordClick();
 	},
 
-	handleSaveClick: function(childComponent){
-		React.findDOMNode(this.refs.saveButton).blur();
-		this.props.handleSaveClick();
+	handleSaveClick1: function(childComponent){
+		$('#modalSave').modal({
+			show: true
+		});
+
+		//React.findDOMNode(this.refs.saveButton).blur();
+		//this.props.handleSaveClick();
+	},
+
+	handleSaveClick2: function(event){
+		event.preventDefault();
+
+		//React.findDOMNode(this.refs.saveButton).blur();
+		this.props.handleSaveClick($('#modalSave form').serializeArray());
 	},
 
 	handleDownloadClick: function(childComponent){
@@ -111,7 +122,7 @@ module.exports = React.createClass({
 		}
 
 		if(this.props.sysex.length){
-			var saveButton = <button ref="saveButton" onClick={this.handleSaveClick} className="btn btn-primary save">
+			var saveButton = <button ref="saveButton" onClick={this.handleSaveClick1} className="btn btn-primary save">
 				<span className="glyphicon glyphicon-cloud-upload" ></span>
 				Save Sysex
 			</button>
@@ -331,7 +342,6 @@ module.exports = React.createClass({
 
 
 			<div id="modalLogin" className="modal fade" role="dialog">
-
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -342,6 +352,36 @@ module.exports = React.createClass({
 
 						<div className="modal-body">
 							<iframe src="/login" width="100%" height="500" frameborder="0"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="modalSave" className="modal fade" role="dialog">
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5>Save Sysex</h5>
+							<button type="button" className="close btn btn-default" data-dismiss="modal">
+								<span className="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+
+						<div className="modal-body">
+							<form action="">
+								<div className="input-group">
+									<span className="input-group-addon" id="save-title">Title: </span>
+									<input type="text" className="form-control" name="save-title" placeholder="An inspired setting." aria-describedby="save-title" />
+								</div>
+								<div className="input-group">
+									<span className="input-group-addon" id="save-description">Description: </span>
+									<input type="text" className="form-control" name="save-description" placeholder="I remember composing this on long summer's evening." aria-describedby="save-description" />
+								</div>
+
+								<button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-primary save">
+									Save
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>

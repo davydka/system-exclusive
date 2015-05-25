@@ -13,8 +13,11 @@ div.account-group {
 iframe {
   border: 0; }
 
-#modalLogin .modal-header {
+#modalSave .modal-header, #modalLogin .modal-header {
   border-bottom: none; }
+  #modalSave .modal-header h5, #modalLogin .modal-header h5 {
+    width: 50%;
+    display: inline-block; }
 
 .midi-activity-container {
   margin-top: 40px; }

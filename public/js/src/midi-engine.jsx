@@ -112,24 +112,33 @@ module.exports = React.createClass({
 		}
 	},
 
-	handleSaveClick: function(){
-		$.ajax
-		({
+	closeModalAndGetSysex: function(){
+		$('#modalSave').modal('hide');
+		this.getUserSysex();
+	},
+
+	handleSaveClick: function(input){
+		var title='', description='';
+		input.map(function(item, index){
+			if(item.name == 'save-title'){
+				title = item.value;
+			}
+			if(item.name == 'save-description'){
+				description = item.value;
+			}
+		});
+		$.ajax({
 			type: 'POST',
 			url: '/api/v1/sysex',
 			contentType: 'application/json',
 			dataType: 'json',
 			data: JSON.stringify({
-				description: "This is the first sysex file to be uploaded.",
-				title: "First Sysex",
+				description: description,
+				title: title,
 				user_id: this.state.user_id,
 				data: this.state.sysex
 			}),
-			success: function (data) {
-				//$.get('/api/v1/sysex/user/'+this.state.user_id, function(data){
-					console.log(data);
-				//});
-			}
+			success: this.closeModalAndGetSysex
 		});
 	},
 

@@ -17,10 +17,16 @@ iframe {
 	border: 0;
 }
 
+#modalSave,
 #modalLogin {
 
 	.modal-header{
 		border-bottom:none;
+
+		h5 {
+			width:50%;
+			display: inline-block;
+		}
 	}
 
 	.close {

@@ -33,7 +33,7 @@ module.exports = function(app){
 
 				if(results.length){
 					user_id = results[0].id;
-					console.log([data, description, title, user_id]);
+					//console.log([data, description, title, user_id]);
 					pg.connect(process.env.DATABASE_URL, function(err, client) {
 						var insertResults = [];
 						var query = client.query('INSERT INTO sysex (id, ts, data, description, title, user_id) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4) RETURNING id', [data, description, title, user_id]);
@@ -99,7 +99,7 @@ module.exports = function(app){
 		var id = req.params.user_id;
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('SELECT * FROM sysex where user_id = $1', [id]);
+			var query = client.query('SELECT * FROM sysex where user_id = $1 ORDER by ts DESC', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {
