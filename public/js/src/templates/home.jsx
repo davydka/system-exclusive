@@ -1,9 +1,13 @@
-var React = require('react');
-var Sizeof = require('sizeof');
+var React	= require('react');
+var Sizeof	= require('sizeof');
 
-var Select	 = require('../components/select');
-var Dial	 = require('../components/dial');
-var Panel 	 = require('../components/panel');
+var Select			= require('../components/select');
+var Dial			= require('../components/dial');
+var Panel 			= require('../components/panel');
+var ButtonRecord	= require('../components/button-record');
+var ButtonPlay		= require('../components/button-play');
+var ButtonSave		= require('../components/button-save');
+var ButtonDownload	= require('../components/button-download');
 
 module.exports = React.createClass({
 
@@ -34,16 +38,11 @@ module.exports = React.createClass({
 	},
 
 	handleLoginClick: function(childComponent){
-		//$('#myModal').on('show', function () {
-		//	$('iframe').attr("src",$('iframe').attr("src"));
-		//});
 		$('#modalLogin').modal({show:true});
 		return false;
 	},
 
-	handlePlayClick: function(childComponent){
-		//console.log(childComponent);
-		React.findDOMNode(this.refs.playButton).blur();
+	handlePlayClick: function(){
 		this.props.handlePlayClick(this.props.sysex);
 	},
 
@@ -53,9 +52,7 @@ module.exports = React.createClass({
 	},
 
 
-	handleRecordClick: function(childComponent){
-		//console.log(childComponent);
-		React.findDOMNode(this.refs.recordButton).blur();
+	handleRecordClick: function(){
 		this.props.handleRecordClick();
 	},
 
@@ -63,21 +60,15 @@ module.exports = React.createClass({
 		$('#modalSave').modal({
 			show: true
 		});
-
-		//React.findDOMNode(this.refs.saveButton).blur();
-		//this.props.handleSaveClick();
 	},
 
 	handleSaveClick2: function(event){
 		event.preventDefault();
-
-		//React.findDOMNode(this.refs.saveButton).blur();
 		this.props.handleSaveClick($('#modalSave form').serializeArray());
 	},
 
 	handleDownloadClick: function(childComponent){
-		React.findDOMNode(this.refs.downloadButton).blur();
-		this.props.handleSaveClick();
+		this.props.handleDownloadClick();
 	},
 
 	render: function(){
@@ -92,52 +83,7 @@ module.exports = React.createClass({
 		var midiOutputs = [];
 		this.props.midi.outputs.forEach( function( key, port ) {
 			midiOutputs.push({"text":key.name, "id":key.id});
-
 		});
-
-		var sysexItems = this.props.sysex.map(function(item, index){
-			//console.log(item);
-			return <div>New Sysex Message {index+1}</div>
-		});
-
-		if(!this.props.recording){
-			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="record btn btn-danger">
-				<span className="glyphicon glyphicon-plus"></span>
-				Record System Exclusive Messages
-			</button>;
-		} else {
-			var recordButton = <button ref="recordButton" onClick={this.handleRecordClick} className="recording record btn btn-danger">
-				<span className="glyphicon glyphicon-stop"></span>
-				Listening...
-			</button>;
-		}
-
-		if(this.props.sysex.length){
-			var playButton = <button ref="playButton" onClick={this.handlePlayClick} className="btn btn-success play">
-				<span className="glyphicon glyphicon-play" ></span>
-				Play
-			</button>
-		} else {
-			var playButton = null;
-		}
-
-		if(this.props.sysex.length){
-			var saveButton = <button ref="saveButton" onClick={this.handleSaveClick1} className="btn btn-primary save">
-				<span className="glyphicon glyphicon-cloud-upload" ></span>
-				Save Sysex
-			</button>
-		} else {
-			var saveButton = null;
-		}
-
-		if(this.props.sysex.length){
-			var downloadButton = <button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary download">
-				<span className="glyphicon glyphicon-download-alt" ></span>
-				Download Sysex
-			</button>
-		} else {
-			var downloadButton = null;
-		}
 
 		if(this.props.serverSysex.length){
 			var rows = this.props.serverSysex.map(function(item, index){
@@ -169,7 +115,7 @@ module.exports = React.createClass({
 				</tr>
 			}.bind(this));
 
-			var dataTable = <table className="table table-hover table-striped">
+			var dataTable = <table className="data-table table table-hover table-striped">
 				<thead>
 				<tr>
 					<th>ID</th>
@@ -232,16 +178,16 @@ module.exports = React.createClass({
 
 			<div className="play-controls">
 				<br/>
-				{recordButton}
-				{playButton}
-				{saveButton}
-				{downloadButton}
+				<ButtonRecord handleRecordClick={this.handleRecordClick} recording={this.props.recording} />
+				<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} />
+				<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} />
+				<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex}  />
 				<br/><br/>
 				<div className="well well-sm">Sysex Messages Received: {this.props.sysex.length}</div>
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
-
-				{dataTable}
 			</div>
+
+			{dataTable}
 
 			<br/>
 			<div className="panel-container">

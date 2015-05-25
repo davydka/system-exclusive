@@ -35,9 +35,9 @@ iframe {
 .list-item-holder img.list-item {
   width: 100%; }
 
-.play-controls button {
+.data-table button, .play-controls button {
   margin-right: 14px; }
-  .play-controls button .glyphicon {
+  .data-table button .glyphicon, .play-controls button .glyphicon {
     margin-right: 5px; }
 
 button.recording {
