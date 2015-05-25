@@ -32,12 +32,12 @@ app.use(stormpath.init(app, {
 				console.log(err);
 			}
 		});
-		console.log('User:', account.email, 'just registered!');
+		//console.log('User:', account.email, 'just registered!');
 		next();
 	},
 	postLoginHandler: function(account, req, res, next) {
-		req.user.id = 1;
-		console.log('User:', account.email, 'just logged in!');
+		//req.user.id = 1;
+		//console.log('User:', account.email, 'just logged in!');
 		next();
 	}
 }));
@@ -59,7 +59,7 @@ app.get('/me', stormpath.loginRequired, function(req, res) {
 		query.on('end', function () {
 			client.end();
 
-			console.log(results[0]);
+			//console.log(results[0]);
 			return res.json({
 				givenName: user.givenName,
 				surname: user.surname,

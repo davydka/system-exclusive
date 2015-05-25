@@ -106,9 +106,9 @@ module.exports = React.createClass({
 		}
 	},
 
-	handlePlayClick: function(){
-		for(var i = 0; i < this.state.sysex.length; i++){
-			this.state.output.send(this.state.sysex[i]);
+	handlePlayClick: function(data){
+		for(var i = 0; i < data.length; i++){
+			this.state.output.send(data[i]);
 		}
 	},
 

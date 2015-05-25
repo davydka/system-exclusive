@@ -44,8 +44,14 @@ module.exports = React.createClass({
 	handlePlayClick: function(childComponent){
 		//console.log(childComponent);
 		React.findDOMNode(this.refs.playButton).blur();
-		this.props.handlePlayClick();
+		this.props.handlePlayClick(this.props.sysex);
 	},
+
+	handleInlinePlayClick: function(index){
+		console.log(this.props.serverSysex[index]);
+		this.props.handlePlayClick(this.props.serverSysex[index].data);
+	},
+
 
 	handleRecordClick: function(childComponent){
 		//console.log(childComponent);
@@ -129,28 +135,28 @@ module.exports = React.createClass({
 					<td>{item.title}</td>
 					<td>{item.description}</td>
 					<td>
-						<button ref="playButton" onClick={this.handlePlayClick} className="btn btn-success play btn-xs">
+						<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
 							<span className="glyphicon glyphicon-play" ></span>
 							Play
 						</button>
 
-						<button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary download btn-xs">
+						<button ref="downloadButton" onClick={this.handleInlineDownloadClick} className="btn btn-primary download btn-xs">
 							<span className="glyphicon glyphicon-download-alt" ></span>
 							Download
 						</button>
 
-						<button ref="deleteButton" onClick={this.handleShareClick} className="btn btn-default share btn-xs">
+						<button ref="deleteButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
 							<span className="glyphicon glyphicon-globe" ></span>
 							Share
 						</button>
 
-						<button ref="deleteButton" onClick={this.handleEditClick} className="btn btn-default edit btn-xs">
+						<button ref="deleteButton" onClick={this.handleInlineEditClick} className="btn btn-default edit btn-xs">
 							<span className="glyphicon glyphicon-pencil" ></span>
 							Edit
 						</button>
 					</td>
 				</tr>
-			});
+			}.bind(this));
 
 			var dataTable = <table className="table table-hover table-striped">
 				<thead>
