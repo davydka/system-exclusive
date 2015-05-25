@@ -33,6 +33,14 @@ module.exports = React.createClass({
 		this.props.setOutput(selected.val());
 	},
 
+	handleLoginClick: function(childComponent){
+		//$('#myModal').on('show', function () {
+		//	$('iframe').attr("src",$('iframe').attr("src"));
+		//});
+		$('#modalLogin').modal({show:true});
+		return false;
+	},
+
 	handlePlayClick: function(childComponent){
 		//console.log(childComponent);
 		React.findDOMNode(this.refs.playButton).blur();
@@ -128,17 +136,17 @@ module.exports = React.createClass({
 
 						<button ref="downloadButton" onClick={this.handleDownloadClick} className="btn btn-primary download btn-xs">
 							<span className="glyphicon glyphicon-download-alt" ></span>
-							Download Sysex
+							Download
 						</button>
 
 						<button ref="deleteButton" onClick={this.handleShareClick} className="btn btn-default share btn-xs">
 							<span className="glyphicon glyphicon-globe" ></span>
-							Share Sysex
+							Share
 						</button>
 
 						<button ref="deleteButton" onClick={this.handleEditClick} className="btn btn-default edit btn-xs">
 							<span className="glyphicon glyphicon-pencil" ></span>
-							Edit Sysex
+							Edit
 						</button>
 					</td>
 				</tr>
@@ -165,10 +173,30 @@ module.exports = React.createClass({
 			var datTable = null;
 		}
 
+		if(typeof this.props.userId == 'undefined'){
+			var accountButton = <div className="btn-group account-group" role="group" >
+				<button ref="loginButton" onClick={this.handleLoginClick} className="btn btn-default login ">
+					<a href="\login">Login</a>
+				</button>
+				<button ref="signupButton" className="btn btn-default signup ">
+					<a href="/register">Signup</a>
+				</button>
+			</div>;
+		} else {
+			var accountButton =  <div className="btn-group account-group" role="group" >
+				<button ref="logoutButton" className="btn btn-default logout ">
+					<a href="/logout">Logout</a>
+				</button>
+			</div>;
+		}
+
+
 
 
 		return <div>
 			<h1>System Exclusive</h1>
+
+			{accountButton}
 
 			<h3>Input</h3>
 			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
@@ -293,6 +321,24 @@ module.exports = React.createClass({
 
 			<div className="hide panel panel-default">
 				<img src="images/panel.jpg" alt=""/>
+			</div>
+
+
+			<div id="modalLogin" className="modal fade" role="dialog">
+
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<button type="button" className="close btn btn-default" data-dismiss="modal">
+								<span className="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+
+						<div className="modal-body">
+							<iframe src="/login" width="100%" height="500" frameborder="0"></iframe>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	}

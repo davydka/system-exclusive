@@ -34,6 +34,13 @@ module.exports = React.createClass({
 		}
 	},
 
+	logOutCookie: function(){
+		Cookie.remove('u');
+		this.setState({
+			userId:undefined
+		});
+	},
+
 	componentDidMount: function(){
 		if(typeof this.state.userId == 'undefined'){
 			$.get('/me', function(data){
@@ -44,7 +51,7 @@ module.exports = React.createClass({
 					Cookie.save('u', data.id);
 					this.getUserSysex();
 				} else {
-					Cookie.remove('u');
+					this.logOutCookie();
 				}
 			}.bind(this));
 		} else {
@@ -60,7 +67,7 @@ module.exports = React.createClass({
 	getUserSysex: function(){
 		$.get('/api/v1/sysex/user/'+this.state.userId, function(data){
 			if(typeof data !='object'){
-				Cookie.remove('u');
+				this.logOutCookie();
 				return;
 			}
 			// Data is coming back as a Postgres array, so we clean it up here.
@@ -256,6 +263,7 @@ module.exports = React.createClass({
 			handlePlayClick={this.handlePlayClick}
 			handleSaveClick={this.handleSaveClick}
 			handleDownloadClick={this.handleDownloadClick}
+			userId={this.state.userId}
 			/>;
 	}
 });

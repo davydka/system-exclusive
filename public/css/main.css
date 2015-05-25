@@ -1,6 +1,21 @@
 body {
   margin: 0; }
 
+.container {
+  position: relative; }
+
+div.account-group {
+  position: absolute;
+  margin-top: 20px;
+  top: 0;
+  right: 0; }
+
+iframe {
+  border: 0; }
+
+#modalLogin .modal-header {
+  border-bottom: none; }
+
 .midi-activity-container {
   margin-top: 40px; }
 
