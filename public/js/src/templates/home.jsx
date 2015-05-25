@@ -8,6 +8,7 @@ var ButtonRecord	= require('../components/button-record');
 var ButtonPlay		= require('../components/button-play');
 var ButtonSave		= require('../components/button-save');
 var ButtonDownload	= require('../components/button-download');
+var AccountGroup	= require('../components/account-group');
 
 module.exports = React.createClass({
 
@@ -136,22 +137,6 @@ module.exports = React.createClass({
 			var datTable = null;
 		}
 
-		if(typeof this.props.userId == 'undefined'){
-			var accountButton = <div className="btn-group account-group" role="group" >
-				<button ref="loginButton" className="btn btn-default login ">
-					<a href="/login">Login</a>
-				</button>
-				<button ref="signupButton" className="btn btn-default signup ">
-					<a href="/register">Signup</a>
-				</button>
-			</div>;
-		} else {
-			var accountButton =  <div className="btn-group account-group" role="group" >
-				<button ref="logoutButton" className="btn btn-default logout ">
-					<a href="/logout">Logout</a>
-				</button>
-			</div>;
-		}
 
 
 
@@ -159,7 +144,7 @@ module.exports = React.createClass({
 		return <div>
 			<h1>System Exclusive</h1>
 
-			{accountButton}
+			<AccountGroup userId = {this.props.userId} />
 
 			<h3>Input</h3>
 			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
