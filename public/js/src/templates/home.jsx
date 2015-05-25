@@ -175,8 +175,8 @@ module.exports = React.createClass({
 
 		if(typeof this.props.userId == 'undefined'){
 			var accountButton = <div className="btn-group account-group" role="group" >
-				<button ref="loginButton" onClick={this.handleLoginClick} className="btn btn-default login ">
-					<a href="\login">Login</a>
+				<button ref="loginButton" className="btn btn-default login ">
+					<a href="/login">Login</a>
 				</button>
 				<button ref="signupButton" className="btn btn-default signup ">
 					<a href="/register">Signup</a>
