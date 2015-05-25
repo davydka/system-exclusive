@@ -5,6 +5,13 @@ module.exports = React.createClass({
 		this.props.handlePlayClick(this.props.serverSysex[index].data);
 	},
 
+	handleInlineDownloadClick: function(index){
+		this.props.handleInlineDownloadClick(
+			this.props.serverSysex[index].data,
+			this.props.serverSysex[index].title
+		);
+	},
+
 	render:function(){
 		if(this.props.serverSysex.length){
 			var rows = this.props.serverSysex.map(function(item, index){
@@ -18,7 +25,7 @@ module.exports = React.createClass({
 							Play
 						</button>
 
-						<button ref="downloadButton" onClick={this.handleInlineDownloadClick} className="btn btn-primary download btn-xs">
+						<button ref="downloadButton" onClick={this.handleInlineDownloadClick.bind(this, index)} className="btn btn-primary download btn-xs">
 							<span className="glyphicon glyphicon-download-alt" ></span>
 							Download
 						</button>

@@ -1,6 +1,7 @@
 var React = require('react');
 var Cookie = require('react-cookie');
 var S = require('string');
+var Conv = require('binstring');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');
@@ -142,8 +143,54 @@ module.exports = React.createClass({
 		});
 	},
 
-	handleDownloadClick: function(){
-		console.log(this.state.sysex);
+	byteDump: [],
+	hexDump: [],
+
+	Dec2Bin: function(n){
+		if(!this.checkDec(n)||n<0)
+			return 0;
+		return n.toString(2)
+	},
+
+	checkDec: function(n){
+		return/^[0-9]{1,64}$/.test(n);
+	},
+
+	pad: function(s,z){
+		s = "" + s;
+		return s.length < z ? this.pad("0"+s, z) : s;
+	},
+
+	handleDownloadClick: function(data, title){
+		this.hexDump = [];
+
+		if(typeof data == 'undefined'){
+			data = this.state.sysex;
+			title = 'sysex';
+		}
+		//console.log(data); //this is coming through as strings instead of numbers
+		///console.log(this.state.sysex);
+
+		var hexString2 = '';
+		data.map(function(item, index){
+			var mainItem = [];
+			item.map(function(item1, index1){
+				mainItem.push(this.pad(parseInt(item1).toString(16), 2));
+			}.bind(this));
+			hexString2 = hexString2+mainItem.join("");
+			this.hexDump.push(mainItem);
+		}.bind(this));
+
+		//var hexString2 = this.hexDump[0].join("");
+		hexString2 = hexString2.toUpperCase();
+
+		var byteArray = new Uint8Array(hexString2.length/2);
+		for (var x = 0; x < byteArray.length; x++){
+			byteArray[x] = parseInt(hexString2.substr(x*2,2), 16);
+		}
+
+		var blob = new Blob([byteArray], {type: "application/octet-stream"});
+		saveAs(blob, title+".syx");
 	},
 
 	addEvents: function(){

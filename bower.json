@@ -20,6 +20,7 @@
     "greensock": "~1.16.1",
     "ScrollToPlugin.min": "http://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/plugins/ScrollToPlugin.min.js",
     "ScrollMagic": "~2.0.5",
-    "nexusUI": "https://raw.githubusercontent.com/davydka/nexusUI/master/dist/nexusUI.js"
+    "nexusUI": "https://raw.githubusercontent.com/davydka/nexusUI/master/dist/nexusUI.js",
+    "file-saver.js": "~1.20150304.1"
   }
 }

@@ -4,6 +4,7 @@
   "description": "Boilerplate for new projects.",
   "main": "gulpfile.js",
   "dependencies": {
+    "binstring": "^0.2.1",
     "body-parser": "^1.12.3",
     "bower": "1.4.x",
     "express": "^4.12.3",

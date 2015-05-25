@@ -65,8 +65,12 @@ module.exports = React.createClass({
 		this.props.handleSaveClick(data);
 	},
 
-	handleDownloadClick: function(childComponent){
-		this.props.handleDownloadClick();
+	handleDownloadClick: function(data){
+		this.props.handleDownloadClick(data);
+	},
+
+	handleInlineDownloadClick: function(data, title){
+		this.props.handleDownloadClick(data, title);
 	},
 
 	render: function(){
@@ -117,7 +121,7 @@ module.exports = React.createClass({
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 			</div>
 
-			<TableData serverSysex = {this.props.serverSysex} handlePlayClick={this.handleInlinePlayClick} />
+			<TableData serverSysex = {this.props.serverSysex} handlePlayClick={this.handleInlinePlayClick} handleInlineDownloadClick={this.handleInlineDownloadClick} />
 
 			<br/>
 
