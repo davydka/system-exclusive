@@ -15,7 +15,7 @@ iframe {
 
 #modalSave .modal-header, #modalLogin .modal-header {
   border-bottom: none; }
-  #modalSave .modal-header h5, #modalLogin .modal-header h5 {
+  #modalSave .modal-header h4, #modalLogin .modal-header h4 {
     width: 50%;
     display: inline-block; }
 

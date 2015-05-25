@@ -231,19 +231,19 @@ module.exports = React.createClass({
 			</div>
 
 			<div className="play-controls">
-				<h3 spacing></h3>
+				<br/>
 				{recordButton}
 				{playButton}
 				{saveButton}
 				{downloadButton}
-				<h3 spacing></h3>
+				<br/><br/>
 				<div className="well well-sm">Sysex Messages Received: {this.props.sysex.length}</div>
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 
 				{dataTable}
 			</div>
 
-			<h3 spacing></h3>
+			<br/>
 			<div className="panel-container">
 
 				<Panel
@@ -361,7 +361,7 @@ module.exports = React.createClass({
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
-							<h5>Save Sysex</h5>
+							<h4>Save Setting</h4>
 							<button type="button" className="close btn btn-default" data-dismiss="modal">
 								<span className="glyphicon glyphicon-remove"></span>
 							</button>
@@ -373,11 +373,12 @@ module.exports = React.createClass({
 									<span className="input-group-addon" id="save-title">Title: </span>
 									<input type="text" className="form-control" name="save-title" placeholder="An inspired setting." aria-describedby="save-title" />
 								</div>
+								<br/>
 								<div className="input-group">
 									<span className="input-group-addon" id="save-description">Description: </span>
 									<input type="text" className="form-control" name="save-description" placeholder="I remember composing this on long summer's evening." aria-describedby="save-description" />
 								</div>
-
+								<br/>
 								<button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-primary save">
 									Save
 								</button>
