@@ -10,19 +10,16 @@ var ButtonSave		= require('../components/button-save');
 var ButtonDownload	= require('../components/button-download');
 var AccountGroup	= require('../components/account-group');
 var TableData		= require('../components/table-data');
+var ModalSave		= require('../components/modal-save');
+var ModalLogin		= require('../components/modal-login');
 
 module.exports = React.createClass({
 
 	componentDidMount: function(){
-
-		//nx.onload = this.props.nexusOnload();
 		nx.onload = function(){
 			nx.colorize("#ffffff"); // sets accent (default)
 			nx.colorize("border", "#222222");
 			nx.colorize("fill", "#222222");
-
-			//lfoRate.context.fillStyle = "#333";
-			//lfoRate.context.fillText("Hello world", 10, 50);
 		};
 
 		// Setup Nexus UI Controls
@@ -63,9 +60,8 @@ module.exports = React.createClass({
 		});
 	},
 
-	handleSaveClick2: function(event){
-		event.preventDefault();
-		this.props.handleSaveClick($('#modalSave form').serializeArray());
+	handleSaveClick2: function(data){
+		this.props.handleSaveClick(data);
 	},
 
 	handleDownloadClick: function(childComponent){
@@ -220,52 +216,9 @@ module.exports = React.createClass({
 			</div>
 
 
-			<div id="modalLogin" className="modal fade" role="dialog">
-				<div className="modal-dialog">
-					<div className="modal-content">
-						<div className="modal-header">
-							<button type="button" className="close btn btn-default" data-dismiss="modal">
-								<span className="glyphicon glyphicon-remove"></span>
-							</button>
-						</div>
+			<ModalLogin></ModalLogin>
+			<ModalSave handleSaveClick2={this.handleSaveClick2} ></ModalSave>
 
-						<div className="modal-body">
-							<iframe src="/login" width="100%" height="500" frameborder="0"></iframe>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div id="modalSave" className="modal fade" role="dialog">
-				<div className="modal-dialog">
-					<div className="modal-content">
-						<div className="modal-header">
-							<h4>Save Setting</h4>
-							<button type="button" className="close btn btn-default" data-dismiss="modal">
-								<span className="glyphicon glyphicon-remove"></span>
-							</button>
-						</div>
-
-						<div className="modal-body">
-							<form action="">
-								<div className="input-group">
-									<span className="input-group-addon" id="save-title">Title: </span>
-									<input type="text" className="form-control" name="save-title" placeholder="An inspired setting." aria-describedby="save-title" />
-								</div>
-								<br/>
-								<div className="input-group">
-									<span className="input-group-addon" id="save-description">Description: </span>
-									<input type="text" className="form-control" name="save-description" placeholder="I remember composing this on long summer's evening." aria-describedby="save-description" />
-								</div>
-								<br/>
-								<button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-primary save">
-									Save
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	}
 });
