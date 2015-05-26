@@ -1,4 +1,5 @@
 var React = require('react');
+var Sizeof = require('sizeof');
 
 module.exports = React.createClass({
 	handleInlinePlayClick: function(index){
@@ -24,6 +25,7 @@ module.exports = React.createClass({
 					<td>{item.id}</td>
 					<td>{item.title}</td>
 					<td>{item.description}</td>
+					<td>{this.props.serverSysex[index].data.length}</td>
 					<td>
 						<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
 							<span className="glyphicon glyphicon-play" ></span>
@@ -54,6 +56,7 @@ module.exports = React.createClass({
 					<th>ID</th>
 					<th>Title</th>
 					<th>Description</th>
+					<th>#Msgs</th>
 					<th>
 
 					</th>

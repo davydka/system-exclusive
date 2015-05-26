@@ -308,7 +308,6 @@ module.exports = React.createClass({
 
 		// Set default midi selection
 		if(typeof this.props.initialInput != 'undefined'){
-			console.log(this.props.initialInput);
 			this.setInput(this.props.initialInput);
 		}
 
