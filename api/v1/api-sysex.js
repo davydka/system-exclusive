@@ -4,6 +4,8 @@ var jsonParser = bodyParser.json();
 var stormpath = require('express-stormpath');
 
 module.exports = function(app){
+	app.use(bodyParser.json({limit: '50mb'}));
+	app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // Create
 	app.post('/api/v1/sysex', jsonParser, function (req, res){

@@ -80,6 +80,7 @@ module.exports = React.createClass({
 
 				return item.data = JSON.parse(cleanData);
 			});
+			//console.log(data);
 
 			this.setState({
 				serverSysex: data
@@ -128,6 +129,11 @@ module.exports = React.createClass({
 	},
 
 	handleSaveClick: function(input){
+		if(typeof this.state.userId == 'undefined'){
+			console.log('alert user to login/register, and rerecord their message');
+			return;
+		}
+
 		var title='', description='', id='';
 		input.map(function(item, index){
 			if(item.name == 'save-id'){
@@ -140,6 +146,24 @@ module.exports = React.createClass({
 				description = item.value;
 			}
 		});
+
+
+		var normalArray = [];
+		// We do this to convert Uint8Array into an normal array
+		// because this changes the way the data stores the data
+		this.state.sysex.map(function(item, index){
+			var mainItem = [];
+
+			for (i = 0; i < item.length; i++) {
+				mainItem.push(item[i]);
+			}
+
+			normalArray.push(mainItem);
+		});
+
+
+		//console.log(normalArrayData);
+		//return;
 
 		if(id != ''){
 			$.ajax({
@@ -154,19 +178,20 @@ module.exports = React.createClass({
 				}),
 				success: this.closeModalAndGetSysex
 			});
-		} else {$.ajax({
-			type: 'POST',
-			url: '/api/v1/sysex',
-			contentType: 'application/json',
-			dataType: 'json',
-			data: JSON.stringify({
-				description: description,
-				title: title,
-				user_id: this.state.user_id,
-				data: this.state.sysex
-			}),
-			success: this.closeModalAndGetSysex
-		});
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '/api/v1/sysex',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify({
+					description: description,
+					title: title,
+					user_id: this.state.user_id,
+					data: normalArray
+				}),
+				success: this.closeModalAndGetSysex
+			});
 		}
 	},
 
@@ -216,17 +241,33 @@ module.exports = React.createClass({
 			title = 'sysex';
 		}
 		//console.log(data); //this is coming through as strings instead of numbers
-		///console.log(this.state.sysex);
+		//console.log(this.state.sysex);
 
 		var hexString2 = '';
 		data.map(function(item, index){
-			var mainItem = [];
-			item.map(function(item1, index1){
-				mainItem.push(this.pad(parseInt(item1).toString(16), 2));
-			}.bind(this));
-			hexString2 = hexString2+mainItem.join("");
-			this.hexDump.push(mainItem);
+
+			if(typeof item != 'object'){
+				//console.log(item);
+				//item.split(",").map()
+				//console.log();
+				//return;
+			} else {
+				var mainItem = [];
+				//item.map(function(item1, index1){
+				//	mainItem.push(this.pad(parseInt(item1).toString(16), 2));
+				//}.bind(this));
+				for (i = 0; i < item.length; i++) {
+					mainItem.push(this.pad(parseInt(item[i]).toString(16), 2));
+				}
+				hexString2 = hexString2+mainItem.join("");
+				this.hexDump.push(mainItem);
+			}
+
 		}.bind(this));
+
+		if(hexString2 == ''){
+			return;
+		}
 
 		//var hexString2 = this.hexDump[0].join("");
 		hexString2 = hexString2.toUpperCase();
@@ -243,7 +284,6 @@ module.exports = React.createClass({
 	addEvents: function(){
 		// Listen for the event.
 		addEventListener('clockTick', this.handleClock, true);
-
 	},
 
 	onErrorCallback: function(err){
