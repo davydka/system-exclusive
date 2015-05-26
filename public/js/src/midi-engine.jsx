@@ -25,6 +25,7 @@ module.exports = React.createClass({
 		return {
 			index:0,
 			output: undefined,
+			input: undefined,
 			midi: false,
 			midiActivity: '',
 			panelClassName: 'hide',
@@ -95,6 +96,10 @@ module.exports = React.createClass({
 	},
 
 	handleRecordClick: function(){
+		if(typeof this.state.input == 'undefined'){
+			return false;
+		}
+
 		if(this.state.recording){
 			this.setState({
 				recording: false
@@ -108,8 +113,12 @@ module.exports = React.createClass({
 	},
 
 	handlePlayClick: function(data){
-		for(var i = 0; i < data.length; i++){
-			this.state.output.send(data[i]);
+		if(typeof this.state.output != 'undefined'){
+			for(var i = 0; i < data.length; i++){
+				this.state.output.send(data[i]);
+			}
+		} else {
+			console.log('alert user to select an output');
 		}
 	},
 
@@ -168,6 +177,7 @@ module.exports = React.createClass({
 				id = item.value;
 			}
 		});
+
 
 		if(id != ''){
 			$.ajax({
@@ -248,20 +258,30 @@ module.exports = React.createClass({
 	onSuccessCallback: function( midiAccess ) {
 		console.log(midiAccess);
 
-
 		this.setState({
 			midi: midiAccess,
-			recording: true,
-			sysex: [[240, 0, 32, 50, 127, 21, 52, 84, 122, 63, 100, 46, 15, 81, 12, 9, 65, 81, 40, 15, 40, 118, 48, 38, 104, 82, 99, 52, 124, 34, 70, 86, 54, 35, 54, 78, 32, 54, 119, 13, 107, 37, 43, 38, 24, 35, 57, 46, 113, 94, 91, 47, 96, 66, 77, 57, 81, 97, 74, 127, 77, 45, 94, 93, 50, 120, 117, 88, 107, 59, 63, 90, 18, 127, 6, 30, 28, 126, 121, 68, 68, 23, 21, 7, 88, 29, 21, 10, 123, 49, 93, 45, 58, 29, 127, 16, 71, 69, 92, 46, 247]],
-			//sysex: [],
+			//sysex: [[240, 0, 32, 50, 127, 21, 52, 84, 122, 63, 100, 46, 15, 81, 12, 9, 65, 81, 40, 15, 40, 118, 48, 38, 104, 82, 99, 52, 124, 34, 70, 86, 54, 35, 54, 78, 32, 54, 119, 13, 107, 37, 43, 38, 24, 35, 57, 46, 113, 94, 91, 47, 96, 66, 77, 57, 81, 97, 74, 127, 77, 45, 94, 93, 50, 120, 117, 88, 107, 59, 63, 90, 18, 127, 6, 30, 28, 126, 121, 68, 68, 23, 21, 7, 88, 29, 21, 10, 123, 49, 93, 45, 58, 29, 127, 16, 71, 69, 92, 46, 247]],
+			sysex: [],
 			output: midiAccess.outputs.get(this.props.initialOutput)
 		});
+
+
+		// Set default midi selection
+		if(typeof this.props.initialInput != 'undefined'){
+			console.log(this.props.initialInput);
+			this.setInput(this.props.initialInput);
+		}
 
 	},
 
 	setInput: function(id){
 		var input = this.state.midi.inputs.get(id);
 		input.onmidimessage = this.midiInputHandler;
+
+		this.setState({
+			input: input,
+			recording: true
+		});
 
 		//var obj = { Url: location.origin+"?input="+input.id+"&output" };
 		//history.pushState(obj, "", obj.Url);
@@ -311,7 +331,7 @@ module.exports = React.createClass({
 			this.setState({
 				sysex: this.state.sysex.concat([event.data])
 			});
-			console.log(event.data);
+			//console.log(event.data);
 			//console.log(event.data[0]);
 			//console.log(event.data[event.data.length-1]);
 			return;
@@ -335,13 +355,12 @@ module.exports = React.createClass({
 			//return <Error message="Your browser does not support the web midi api." />
 		}
 
-		// Set default midi selection
-		if(this.props.initialInput){
-			this.setInput(this.props.initialInput);
-		}
+
 
 		return <Home
 			midi={this.state.midi}
+			output={this.state.output}
+			input={this.state.input}
 			midiActivity={this.state.midiActivity}
 			className={this.state.panelClassName}
 			setInput={this.setInput}

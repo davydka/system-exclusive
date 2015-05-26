@@ -19,6 +19,7 @@ module.exports = React.createClass({
 	render:function(){
 		if(this.props.serverSysex.length){
 			var rows = this.props.serverSysex.map(function(item, index){
+
 				return <tr>
 					<td>{item.id}</td>
 					<td>{item.title}</td>

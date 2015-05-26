@@ -145,6 +145,7 @@ module.exports = React.createClass({
 			</div>
 
 			<TableData
+				output={this.props.output}
 				serverSysex = {this.props.serverSysex}
 				handlePlayClick={this.handleInlinePlayClick}
 				handleInlineDownloadClick={this.handleInlineDownloadClick}
