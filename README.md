@@ -4,7 +4,7 @@
 * Install front end libraries/frameworks: `bower install`
 * Run the server for local development: `gulp serve` or just `gulp`
 
-Site Url: [https://www.system-exclusive.com/]()
+Site Url: [https://www.system-exclusive.com/](https://www.system-exclusive.com/)
 
 ##Notes
 
