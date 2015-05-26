@@ -4,7 +4,7 @@
 * Install front end libraries/frameworks: `bower install`
 * Run the server for local development: `gulp serve` or just `gulp`
 
-Site Url: [http://infinite-gif.herokuapp.com/]()
+Site Url: [https://www.system-exclusive.com/]()
 
 ##Notes
 
