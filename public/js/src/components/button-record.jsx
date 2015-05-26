@@ -10,7 +10,7 @@ module.exports = React.createClass({
 		if(!this.props.recording){
 			return <button ref="recordButton" onClick={this.handleRecordClick} className="record btn btn-danger">
 				<span className="glyphicon glyphicon-plus"></span>
-				Record System Exclusive Messages
+				Record New System Exclusive Messages
 			</button>;
 		} else {
 			return <button ref="recordButton" onClick={this.handleRecordClick} className="recording record btn btn-danger">

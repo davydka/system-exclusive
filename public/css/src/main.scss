@@ -18,7 +18,6 @@ iframe {
 }
 
 .modal {
-
 	.modal-header{
 		border-bottom:none;
 
@@ -27,16 +26,23 @@ iframe {
 			display: inline-block;
 		}
 	}
-
-	.close {
-
-	}
 }
 
 #modalEdit {
-
 	.delete {
 		float:right;
+	}
+}
+
+.details {
+	.row {
+		button {
+			display: block;
+		}
+
+		img {
+			max-width: 100%;
+		}
 	}
 }
 
@@ -61,12 +67,30 @@ iframe {
 	width:100%;
 }
 
+.play-controls {
+	.row {
+		.col-md-8 {
+			margin-top: 14px;
+		}
+	}
+}
+
 .data-table button,
 .play-controls button {
-	margin-right:14px;
+	margin-right: 14px;
 
 	.glyphicon{
 		margin-right:5px;
+	}
+}
+
+.data-table {
+	.table-controls {
+		min-width:292px;
+	}
+
+	button:last-of-type {
+		margin:0;
 	}
 }
 

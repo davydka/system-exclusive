@@ -22,6 +22,11 @@ iframe {
 #modalEdit .delete {
   float: right; }
 
+.details .row button {
+  display: block; }
+.details .row img {
+  max-width: 100%; }
+
 .midi-activity-container {
   margin-top: 40px; }
 
@@ -38,10 +43,18 @@ iframe {
 .list-item-holder img.list-item {
   width: 100%; }
 
+.play-controls .row .col-md-8 {
+  margin-top: 14px; }
+
 .data-table button, .play-controls button {
   margin-right: 14px; }
   .data-table button .glyphicon, .play-controls button .glyphicon {
     margin-right: 5px; }
+
+.data-table .table-controls {
+  min-width: 292px; }
+.data-table button:last-of-type {
+  margin: 0; }
 
 button.recording {
   background-color: #902524; }

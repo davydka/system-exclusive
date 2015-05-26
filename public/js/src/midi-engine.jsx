@@ -32,6 +32,7 @@ module.exports = React.createClass({
 			userId: Cookie.load('u'),
 			recording: false,
 			serverSysex: [],
+			detailData: undefined,
 			sysex: []
 		}
 	},
@@ -60,6 +61,12 @@ module.exports = React.createClass({
 			this.getUserSysex();
 		}
 
+		// Are we on a syx detail page?
+		if(location.pathname.toLowerCase().indexOf('syx') > -1){
+			var id = location.pathname.toLowerCase().substr(location.pathname.toLowerCase().lastIndexOf('/') + 1);
+			this.getIndividualSysex(id);
+		}
+
 		if(this.isMounted()) {
 			// sysex: true brings up a security dialog, see: http://www.w3.org/TR/webmidi/#security-and-privacy-considerations-of-midi
 			navigator.requestMIDIAccess({ sysex: true }).then(this.onSuccessCallback, this.onErrorCallback);
@@ -84,6 +91,25 @@ module.exports = React.createClass({
 
 			this.setState({
 				serverSysex: data
+			});
+		}.bind(this));
+	},
+
+	getIndividualSysex: function(id){
+		$.get('/api/v1/sysex/'+id, function(data){
+			// Data is coming back as a Postgres array, so we clean it up here.
+			data.map(function(item, index){
+				var cleanData = item.data;
+				cleanData = S(cleanData).replaceAll('{', '[').s;
+				cleanData = S(cleanData).replaceAll('}', ']').s;
+
+				return item.data = JSON.parse(cleanData);
+			});
+
+			this.setState({
+				detailData: data[0],
+				recording:false,
+				sysex: data[0].data
 			});
 		}.bind(this));
 	},
@@ -416,6 +442,7 @@ module.exports = React.createClass({
 			handleDeleteClick={this.handleDeleteClick}
 			handleDownloadClick={this.handleDownloadClick}
 			userId={this.state.userId}
+			detailData= {this.state.detailData}
 			/>;
 	}
 });

@@ -5,10 +5,16 @@ var server = http.createServer(app);
 var pg = require('pg').native;
 var bodyParser = require('body-parser');
 var stormpath = require('express-stormpath');
+var ejs = require('ejs');
 
 var environment = process.env.NODE_ENV;
 
-
+app.use(function(req, res, next) {
+	if(req.url.substr(-1) == '/' && req.url.length > 1)
+		res.redirect(301, req.url.slice(0, -1));
+	else
+		next();
+});
 
 /*
 /register
@@ -58,15 +64,12 @@ app.get('/me', stormpath.loginRequired, function(req, res) {
 		// After all data is returned, close connection and return results
 		query.on('end', function () {
 			client.end();
-
-			//console.log(results[0]);
 			return res.json({
 				givenName: user.givenName,
 				surname: user.surname,
 				email: user.email,
 				id: results[0].id
 			});
-
 		});
 
 		// Handle Errors
@@ -74,10 +77,19 @@ app.get('/me', stormpath.loginRequired, function(req, res) {
 			console.log(err);
 		}
 	});
-
-
 });
 
+
+app.get('/syx/:sysex_id', function (req, res) {
+	var results = [];
+	var id = req.params.sysex_id;
+
+	return res.sendFile(__dirname + '/public/index.html');
+});
+
+
+
+//app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 require('./api/v1/api-sysex.js')(app);

@@ -96,7 +96,7 @@ module.exports = React.createClass({
 				</Panel>
 
 				<div className="hide panel panel-default">
-					<img src="images/panel.jpg" alt=""/>
+					<img src="/images/panel.jpg" alt=""/>
 				</div>
 			</div>
 	}

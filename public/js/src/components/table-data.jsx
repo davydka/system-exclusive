@@ -27,25 +27,26 @@ module.exports = React.createClass({
 					<td>{item.description}</td>
 					<td>{this.props.serverSysex[index].data.length}</td>
 					<td>
-						<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
-							<span className="glyphicon glyphicon-play" ></span>
-							Play
-						</button>
+						<div className="table-controls">
+							<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
+								<span className="glyphicon glyphicon-play" ></span>
+								Play
+							</button>
 
-						<button ref="downloadButton" onClick={this.handleInlineDownloadClick.bind(this, index)} className="btn btn-primary download btn-xs">
-							<span className="glyphicon glyphicon-download-alt" ></span>
-							Download
-						</button>
+							<button ref="downloadButton" onClick={this.handleInlineDownloadClick.bind(this, index)} className="btn btn-primary download btn-xs">
+								<span className="glyphicon glyphicon-download-alt" ></span>
+								Download
+							</button>
+							<button ref="deleteButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
+								<span className="glyphicon glyphicon-globe" ></span>
+								<a href={"/syx/"+item.id}>Share</a>
+							</button>
 
-						<button ref="deleteButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
-							<span className="glyphicon glyphicon-globe" ></span>
-							Share
-						</button>
-
-						<button ref="deleteButton" onClick={this.handleInlineEditClick.bind(this, index)} className="btn btn-default edit btn-xs">
-							<span className="glyphicon glyphicon-pencil" ></span>
-							Edit
-						</button>
+							<button ref="deleteButton" onClick={this.handleInlineEditClick.bind(this, index)} className="btn btn-default edit btn-xs">
+								<span className="glyphicon glyphicon-pencil" ></span>
+								Edit
+							</button>
+						</div>
 					</td>
 				</tr>
 			}.bind(this));

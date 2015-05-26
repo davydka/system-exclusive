@@ -19,7 +19,9 @@ module.exports = React.createClass({
 
 	getInitialState: function(){
 		return {
-			modalData: this.props.sysex
+			modalData: this.props.sysex,
+			sizeX: this.getRandomInt(0,9),
+			sizeY: this.getRandomInt(0,9)
 		}
 	},
 
@@ -96,6 +98,10 @@ module.exports = React.createClass({
 		//console.log(this.props.serverSysex[index].title)
 	},
 
+	getRandomInt: function(min, max) {
+		return Math.floor(Math.random() * (max - min)) + min;
+	},
+
 	render: function(){
 		//console.log(this.props.midi.inputs);
 
@@ -110,7 +116,32 @@ module.exports = React.createClass({
 			midiOutputs.push({"text":key.name, "id":key.id});
 		});
 
+		var details = null;
 
+		if(typeof this.props.detailData != 'undefined' && !this.props.recording){
+			var kittenString = "https://placekitten.com/41"+this.state.sizeX+"/30"+this.state.sizeY;
+
+			details = <div className="jumbotron details">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-4">
+							<h3>{this.props.detailData.title}</h3>
+							<p>{this.props.detailData.description}</p>
+							<br/>
+							<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+							<br/>
+							<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />
+							<br/>
+							<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+							<br/>
+						</div>
+						<div className="col-md-8">
+							<img src={kittenString} alt=""/>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
 
 
 		return <div>
@@ -135,15 +166,25 @@ module.exports = React.createClass({
 
 			<div className="play-controls">
 				<br/>
-				<ButtonRecord handleRecordClick={this.handleRecordClick} recording={this.props.recording} />
-				<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} />
-				<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} />
-				<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex}  />
-				<br/><br/>
+				{details}
+				<div className="row">
+					<div className="col-md-4">
+						<ButtonRecord handleRecordClick={this.handleRecordClick} recording={this.props.recording} detailData={this.props.detailData} />
+						<br/>
+					</div>
+					<div className="col-md-8">
+						<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+						<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />
+						<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+					</div>
+				</div>
+				<br/>
 				<div className="well well-sm">Sysex Messages Received: {this.props.sysex.length}</div>
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 			</div>
 
+			<br/>
+			<h3>Message Library</h3>
 			<TableData
 				output={this.props.output}
 				serverSysex = {this.props.serverSysex}
@@ -153,7 +194,7 @@ module.exports = React.createClass({
 				/>
 
 			<br/>
-
+			<h3>Controls</h3>
 			<PanelMain></PanelMain>
 
 			<ModalLogin></ModalLogin>
