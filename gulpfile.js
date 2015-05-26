@@ -44,6 +44,7 @@ gulp.task('nodemon', function (cb) {
 // inject bower components
 gulp.task('wiredep', function () {
 	var wiredep = require('wiredep').stream;
+	//addRootSlash: false
 	gulp.src('public/*.html')
 		.pipe(wiredep())
 		.pipe(gulp.dest('public'));

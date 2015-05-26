@@ -43,8 +43,9 @@ iframe {
 .list-item-holder img.list-item {
   width: 100%; }
 
-.play-controls .row .col-md-8 {
-  margin-top: 14px; }
+@media (max-width: 992px) {
+  .play-controls .row .col-md-8 {
+    margin-top: 14px; } }
 
 .data-table button, .play-controls button {
   margin-right: 14px; }

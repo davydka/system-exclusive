@@ -1,11 +1,11 @@
 {
-  "name": "Init",
+  "name": "System Exclusive",
   "version": "1.0.0",
-  "homepage": "https://github.com/davydka/init",
+  "homepage": "https://github.com/davydka/system-exclusive",
   "authors": [
     "davidwhitely <davydka@gmail.com>"
   ],
-  "description": "Boilerplate for new projects.",
+  "description": "System Exclusive.",
   "license": "MIT",
   "ignore": [
     "**/.*",

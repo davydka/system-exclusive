@@ -68,11 +68,14 @@ iframe {
 }
 
 .play-controls {
-	.row {
-		.col-md-8 {
-			margin-top: 14px;
+	@media (max-width: 992px) {
+		.row {
+			.col-md-8 {
+				margin-top: 14px;
+			}
 		}
 	}
+
 }
 
 .data-table button,
