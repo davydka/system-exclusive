@@ -12,7 +12,7 @@ module.exports = React.createClass({
 					</div>
 
 					<div className="modal-body">
-						<iframe src="/login" width="100%" height="500" frameborder="0"></iframe>
+						<iframe src="/login" width="100%" height="500" frameBorder="0"></iframe>
 					</div>
 				</div>
 			</div>
