@@ -12,6 +12,10 @@ module.exports = React.createClass({
 		);
 	},
 
+	handleInlineEditClick: function(index){
+		this.props.handleInlineEditClick(index);
+	},
+
 	render:function(){
 		if(this.props.serverSysex.length){
 			var rows = this.props.serverSysex.map(function(item, index){
@@ -35,7 +39,7 @@ module.exports = React.createClass({
 							Share
 						</button>
 
-						<button ref="deleteButton" onClick={this.handleInlineEditClick} className="btn btn-default edit btn-xs">
+						<button ref="deleteButton" onClick={this.handleInlineEditClick.bind(this, index)} className="btn btn-default edit btn-xs">
 							<span className="glyphicon glyphicon-pencil" ></span>
 							Edit
 						</button>

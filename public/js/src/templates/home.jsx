@@ -12,9 +12,16 @@ var AccountGroup	= require('../components/account-group');
 var TableData		= require('../components/table-data');
 var ModalSave		= require('../components/modal-save');
 var ModalLogin		= require('../components/modal-login');
+var ModalEdit		= require('../components/modal-edit');
 var PanelMain		= require('../components/panel-main');
 
 module.exports = React.createClass({
+
+	getInitialState: function(){
+		return {
+			modalData: this.props.sysex
+		}
+	},
 
 	componentDidMount: function(){
 		nx.onload = function(){
@@ -65,12 +72,28 @@ module.exports = React.createClass({
 		this.props.handleSaveClick(data);
 	},
 
+	handleDeleteClick: function(data){
+		this.props.handleDeleteClick(data);
+	},
+
 	handleDownloadClick: function(data){
 		this.props.handleDownloadClick(data);
 	},
 
 	handleInlineDownloadClick: function(data, title){
 		this.props.handleDownloadClick(data, title);
+	},
+
+	handleInlineEditClick: function(index){
+		this.setState({
+			modalData: this.props.serverSysex[index]
+		});
+
+		$('#modalEdit').modal({
+			show: true
+		});
+
+		//console.log(this.props.serverSysex[index].title)
 	},
 
 	render: function(){
@@ -121,13 +144,20 @@ module.exports = React.createClass({
 				<div className="well well-sm">Holding {Sizeof.sizeof(this.props.sysex, true)} of memory in browser.</div>
 			</div>
 
-			<TableData serverSysex = {this.props.serverSysex} handlePlayClick={this.handleInlinePlayClick} handleInlineDownloadClick={this.handleInlineDownloadClick} />
+			<TableData
+				serverSysex = {this.props.serverSysex}
+				handlePlayClick={this.handleInlinePlayClick}
+				handleInlineDownloadClick={this.handleInlineDownloadClick}
+				handleInlineEditClick={this.handleInlineEditClick}
+				/>
 
 			<br/>
 
 			<PanelMain></PanelMain>
 
 			<ModalLogin></ModalLogin>
+
+			<ModalEdit modalData={this.state.modalData} handleSaveClick2={this.handleSaveClick2} handleDeleteClick={this.handleDeleteClick} ></ModalEdit>
 
 			<ModalSave handleSaveClick2={this.handleSaveClick2} ></ModalSave>
 

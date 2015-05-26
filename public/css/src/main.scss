@@ -17,8 +17,7 @@ iframe {
 	border: 0;
 }
 
-#modalSave,
-#modalLogin {
+.modal {
 
 	.modal-header{
 		border-bottom:none;
@@ -31,6 +30,13 @@ iframe {
 
 	.close {
 
+	}
+}
+
+#modalEdit {
+
+	.delete {
+		float:right;
 	}
 }
 

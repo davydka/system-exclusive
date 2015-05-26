@@ -114,13 +114,16 @@ module.exports = React.createClass({
 	},
 
 	closeModalAndGetSysex: function(){
-		$('#modalSave').modal('hide');
+		$('.modal').modal('hide');
 		this.getUserSysex();
 	},
 
 	handleSaveClick: function(input){
-		var title='', description='';
+		var title='', description='', id='';
 		input.map(function(item, index){
+			if(item.name == 'save-id'){
+				id = item.value;
+			}
 			if(item.name == 'save-title'){
 				title = item.value;
 			}
@@ -128,7 +131,21 @@ module.exports = React.createClass({
 				description = item.value;
 			}
 		});
-		$.ajax({
+
+		if(id != ''){
+			$.ajax({
+				type: 'PUT',
+				url: '/api/v1/sysex/'+id,
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify({
+					description: description,
+					title: title,
+					id: id
+				}),
+				success: this.closeModalAndGetSysex
+			});
+		} else {$.ajax({
 			type: 'POST',
 			url: '/api/v1/sysex',
 			contentType: 'application/json',
@@ -141,6 +158,26 @@ module.exports = React.createClass({
 			}),
 			success: this.closeModalAndGetSysex
 		});
+		}
+	},
+
+	handleDeleteClick: function(input){
+		var id='';
+		input.map(function(item, index){
+			if(item.name == 'save-id'){
+				id = item.value;
+			}
+		});
+
+		if(id != ''){
+			$.ajax({
+				type: 'DELETE',
+				url: '/api/v1/sysex/'+id,
+				contentType: 'application/json',
+				dataType: 'json',
+				success: this.closeModalAndGetSysex
+			});
+		}
 	},
 
 	byteDump: [],
@@ -318,6 +355,7 @@ module.exports = React.createClass({
 			handleRecordClick={this.handleRecordClick}
 			handlePlayClick={this.handlePlayClick}
 			handleSaveClick={this.handleSaveClick}
+			handleDeleteClick={this.handleDeleteClick}
 			handleDownloadClick={this.handleDownloadClick}
 			userId={this.state.userId}
 			/>;

@@ -124,20 +124,25 @@ module.exports = function(app){
 	app.put('/api/v1/sysex/:sysex_id', jsonParser, function (req, res) {
 		var results = [];
 		var id = req.params.sysex_id;
-		var data = req.body.data;
 		var description = req.body.description;
 		var title = req.body.title;
-		var user_id = req.body.user_id;
+		var id = req.body.id;
+
+		if(typeof req.user == 'undefined'){
+			res.status(401);
+			return res.send('Not Authenticated.');
+		}
+
+		//return res.send('thanks');
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
 
 			//client.query('INSERT INTO data (sysex_id, key, value) VALUES ($1, $2, $3)', [id, "comment", req.body.comment]);
 			client.query('UPDATE sysex '+
-				'SET data = $1, '+
-				'description = $2, '+
-				'title = $3 '+
-				'WHERE id = $4',
-			[data, description, title, id]);
+				'SET description = $1, '+
+				'title = $2 '+
+				'WHERE id = $3',
+			[description, title, id]);
 
 
 			var query = client.query('SELECT * FROM sysex where id = $1 order by ts desc', [id]);
