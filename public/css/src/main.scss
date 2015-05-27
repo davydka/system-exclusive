@@ -2,6 +2,28 @@ body {
 	margin: 0;
 }
 
+select {
+	width: 150px;
+	padding: 5px 5px;
+	font-size: 16px;
+	color:#666666;
+	border: solid 0 #CCC;
+	border-radius: 5px;
+	outline: black;
+	cursor:pointer;
+	background-color:#EEE;
+}
+
+canvas {
+	cursor:pointer;
+	border-radius:5px;
+	moz-border-radius:5px;
+	webkit-border-radius:5px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+
 .container {
 	position: relative;
 }
