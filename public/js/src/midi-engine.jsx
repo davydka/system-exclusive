@@ -1,7 +1,6 @@
 var React = require('react');
 var Cookie = require('react-cookie');
 var S = require('string');
-var Conv = require('binstring');
 
 var Home = require('./templates/home');
 var Error = require('./components/error');

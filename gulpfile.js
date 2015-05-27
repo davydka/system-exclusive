@@ -9,6 +9,17 @@ var browserify = require('browserify'); // allows use of require() in JS
 var watchify = require('watchify'); // why use this instead of gulp.watch?
 var reactify = require('reactify'); // works with browserify to convert jsx into JS
 var uglify = require('gulp-uglify');
+var replace = require('gulp-replace');
+
+gulp.task('modifyBower', function(){
+	gulp.src(['public/index.html'])
+		.pipe(replace(/"bower_components/g, '"/bower_components'))
+		.pipe(replace(/dist\/jquery\.js/g, 'dist/jquery.min.js'))
+		.pipe(replace(/dist\/js\/bootstrap\.js/g, 'dist/js/bootstrap.min.js'))
+		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
+		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))
+		.pipe(gulp.dest('public'));
+});
 
 
 gulp.task('sass', function () {
@@ -49,6 +60,11 @@ gulp.task('wiredep', function () {
 	//addRootSlash: false
 	gulp.src('public/*.html')
 		.pipe(wiredep())
+		.pipe(replace(/"bower_components/g, '"/bower_components'))
+		.pipe(replace(/dist\/jquery\.js/g, 'dist/jquery.min.js'))
+		.pipe(replace(/dist\/js\/bootstrap\.js/g, 'dist/js/bootstrap.min.js'))
+		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
+		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))
 		.pipe(gulp.dest('public'));
 });
 

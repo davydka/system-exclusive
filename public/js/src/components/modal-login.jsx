@@ -2,6 +2,8 @@ var React = require('react');
 
 module.exports = React.createClass({
 	render:function(){
+		//make this empty for now, until it gets further developed/completed
+		return null;
 		return <div id="modalLogin" className="modal fade" role="dialog">
 			<div className="modal-dialog">
 				<div className="modal-content">
