@@ -9,7 +9,7 @@ var Error = require('./components/error');
 // Lifecycle
 // 		componentDidMount
 //			requestMidiAccess
-//				onSusccessCallback
+//				onSuccessCallback
 //					addEvents
 //					set Midi Access State Object
 
@@ -78,14 +78,17 @@ module.exports = React.createClass({
 				this.logOutCookie();
 				return;
 			}
-			// Data is coming back as a Postgres array, so we clean it up here.
-			data.map(function(item, index){
-				var cleanData = item.data;
-				cleanData = S(cleanData).replaceAll('{', '[').s;
-				cleanData = S(cleanData).replaceAll('}', ']').s;
 
-				return item.data = JSON.parse(cleanData);
-			});
+			//console.log(data);
+			// Data is coming back as a Postgres array, so we clean it up here.
+			//data.map(function(item, index){
+			//	var cleanData = item.data;
+			//
+			//	cleanData = S(cleanData).replaceAll('{', '[').s;
+			//	cleanData = S(cleanData).replaceAll('}', ']').s;
+			//
+			//	return item.data = JSON.parse(cleanData);
+			//});
 			//console.log(data);
 
 			this.setState({

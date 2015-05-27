@@ -1,9 +1,11 @@
 var React = require('react');
 var Sizeof = require('sizeof');
+var S = require('string');
 
 module.exports = React.createClass({
 	handleInlinePlayClick: function(index){
-		this.props.handlePlayClick(this.props.serverSysex[index].data);
+		var id = this.props.serverSysex[index].id;
+		this.getIndividualSysex(id);
 	},
 
 	handleInlineDownloadClick: function(index){
@@ -17,6 +19,20 @@ module.exports = React.createClass({
 		this.props.handleInlineEditClick(index);
 	},
 
+	getIndividualSysex: function(id){
+		$.get('/api/v1/sysex/'+id, function(data){
+			// Data is coming back as a Postgres array, so we clean it up here.
+			data.map(function(item, index){
+				var cleanData = item.data;
+				cleanData = S(cleanData).replaceAll('{', '[').s;
+				cleanData = S(cleanData).replaceAll('}', ']').s;
+
+				return item.data = JSON.parse(cleanData);
+			});
+			this.props.handlePlayClick(data[0].data);
+		}.bind(this));
+	},
+
 	render:function(){
 		if(this.props.serverSysex.length){
 			var rows = this.props.serverSysex.map(function(item, index){
@@ -25,7 +41,6 @@ module.exports = React.createClass({
 					<td>{item.id}</td>
 					<td>{item.title}</td>
 					<td>{item.description}</td>
-					<td>{this.props.serverSysex[index].data.length}</td>
 					<td>
 						<div className="table-controls">
 							<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
@@ -57,7 +72,6 @@ module.exports = React.createClass({
 					<th>ID</th>
 					<th>Title</th>
 					<th>Description</th>
-					<th>#Msgs</th>
 					<th>
 
 					</th>

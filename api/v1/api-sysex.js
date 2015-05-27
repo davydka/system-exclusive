@@ -101,7 +101,7 @@ module.exports = function(app){
 		var id = req.params.user_id;
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('SELECT * FROM sysex where user_id = $1 ORDER by ts DESC', [id]);
+			var query = client.query('SELECT id, ts, description, title, user_id FROM sysex where user_id = $1 ORDER by ts DESC', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {

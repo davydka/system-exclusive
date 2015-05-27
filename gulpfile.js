@@ -11,10 +11,10 @@ var reactify = require('reactify'); // works with browserify to convert jsx into
 var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 
-gulp.task('modifyNexus', function(){
-	gulp.src(['public/bower_components/nexusUI/index.js'])
+gulp.task('build', function(){
+	gulp.src(['public/js/application.js'])
 		.pipe(uglify())
-		.pipe(gulp.dest('public/bower_components/nexusUI'));
+		.pipe(gulp.dest('public/js'));
 });
 
 
@@ -89,8 +89,8 @@ gulp.task('default', function () {
 			.bundle()
 			.on('error', gutil.log.bind('gutil', 'Browserify Error'))
 			.pipe(source('application.js'))
-			.pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
-			.pipe(uglify())
+			//.pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
+			//.pipe(uglify())
 			.pipe(gulp.dest('public/js/'))
 			;
 	}
