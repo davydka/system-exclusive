@@ -10,6 +10,7 @@
     "ejs": "^2.3.1",
     "express": "^4.12.3",
     "express-stormpath": "^1.0.5",
+    "gulp-uglify": "^1.2.0",
     "jade": "^1.10.0",
     "mobile-detect": "^1.1.0",
     "pg": "^4.3.0",
@@ -17,7 +18,8 @@
     "querystring": "^0.2.0",
     "react-cookie": "^0.1.8",
     "sizeof": "^1.0.0",
-    "string": "^3.1.1"
+    "string": "^3.1.1",
+    "vinyl-buffer": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^10.1.0",

@@ -4,9 +4,11 @@ var sass = require('gulp-sass');
 
 var gutil = require('gulp-util'); // offers more useful console logging build processes
 var source = require('vinyl-source-stream'); // allows moving text files from one part of build process to another
+var buffer = require('vinyl-buffer');
 var browserify = require('browserify'); // allows use of require() in JS
 var watchify = require('watchify'); // why use this instead of gulp.watch?
 var reactify = require('reactify'); // works with browserify to convert jsx into JS
+var uglify = require('gulp-uglify');
 
 
 gulp.task('sass', function () {
@@ -59,7 +61,6 @@ gulp.task('serve', ['nodemon', 'sass', 'wiredep'], function () {
 
 gulp.task('default', function () {
 
-
 	var bundler = watchify(browserify({
 		entries: ['./public/js/src/app.jsx'],
 		transform: [reactify],
@@ -76,6 +77,8 @@ gulp.task('default', function () {
 			.bundle()
 			.on('error', gutil.log.bind('gutil', 'Browserify Error'))
 			.pipe(source('application.js'))
+			.pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
+			.pipe(uglify())
 			.pipe(gulp.dest('public/js/'))
 			;
 	}
