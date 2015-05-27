@@ -62,10 +62,6 @@ gulp.task('wiredep', function () {
 		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
 		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))
 		.pipe(gulp.dest('public'));
-
-	gulp.src(['public/bower_components/nexusUI/index.js'])
-		.pipe(uglify())
-		.pipe(gulp.dest('public/bower_components/nexusUI'));
 });
 
 
