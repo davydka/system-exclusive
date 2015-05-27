@@ -11,14 +11,10 @@ var reactify = require('reactify'); // works with browserify to convert jsx into
 var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 
-gulp.task('modifyBower', function(){
-	gulp.src(['public/index.html'])
-		.pipe(replace(/"bower_components/g, '"/bower_components'))
-		.pipe(replace(/dist\/jquery\.js/g, 'dist/jquery.min.js'))
-		.pipe(replace(/dist\/js\/bootstrap\.js/g, 'dist/js/bootstrap.min.js'))
-		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
-		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))
-		.pipe(gulp.dest('public'));
+gulp.task('modifyNexus', function(){
+	gulp.src(['public/bower_components/nexusUI/index.js'])
+		.pipe(uglify())
+		.pipe(gulp.dest('public/bower_components/nexusUI'));
 });
 
 
@@ -66,6 +62,10 @@ gulp.task('wiredep', function () {
 		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
 		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))
 		.pipe(gulp.dest('public'));
+
+	gulp.src(['public/bower_components/nexusUI/index.js'])
+		.pipe(uglify())
+		.pipe(gulp.dest('public/bower_components/nexusUI'));
 });
 
 
