@@ -244,7 +244,6 @@ module.exports = React.createClass({
 	},
 
 	byteDump: [],
-	hexDump: [],
 
 	Dec2Bin: function(n){
 		if(!this.checkDec(n)||n<0)
@@ -262,8 +261,6 @@ module.exports = React.createClass({
 	},
 
 	handleDownloadClick: function(data, title){
-		this.hexDump = [];
-
 		if(typeof data == 'undefined'){
 			data = this.state.sysex;
 			title = 'sysex';
@@ -271,38 +268,31 @@ module.exports = React.createClass({
 		//console.log(data); //this is coming through as strings instead of numbers
 		//console.log(this.state.sysex);
 
-		var hexString2 = '';
+		var hexString = '';
 		data.map(function(item, index){
 
 			if(typeof item != 'object'){
-				//console.log(item);
-				//item.split(",").map()
-				//console.log();
-				//return;
+				// nada
 			} else {
 				var mainItem = [];
-				//item.map(function(item1, index1){
-				//	mainItem.push(this.pad(parseInt(item1).toString(16), 2));
-				//}.bind(this));
 				for (i = 0; i < item.length; i++) {
 					mainItem.push(this.pad(parseInt(item[i]).toString(16), 2));
 				}
-				hexString2 = hexString2+mainItem.join("");
-				this.hexDump.push(mainItem);
+				hexString = hexString+mainItem.join("");
 			}
 
 		}.bind(this));
 
-		if(hexString2 == ''){
+		if(hexString == ''){
 			return;
 		}
 
 		//var hexString2 = this.hexDump[0].join("");
-		hexString2 = hexString2.toUpperCase();
+		hexString = hexString.toUpperCase();
 
-		var byteArray = new Uint8Array(hexString2.length/2);
+		var byteArray = new Uint8Array(hexString.length/2);
 		for (var x = 0; x < byteArray.length; x++){
-			byteArray[x] = parseInt(hexString2.substr(x*2,2), 16);
+			byteArray[x] = parseInt(hexString.substr(x*2,2), 16);
 		}
 
 		var blob = new Blob([byteArray], {type: "application/octet-stream"});

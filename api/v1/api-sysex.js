@@ -2,6 +2,7 @@ var pg = require('pg').native;
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var stormpath = require('express-stormpath');
+var fs = require('fs');
 
 module.exports = function(app){
 	app.use(bodyParser.json({limit: '50mb'}));
@@ -48,6 +49,18 @@ module.exports = function(app){
 						// After all data is returned, close connection and return results
 						query.on('end', function() {
 							client.end();
+
+							if(insertResults.length){
+								var fileName = insertResults[0].id;
+								console.log();
+
+								var buffer = new Buffer(byteArray.length);
+
+								for (var i = 0; i < byteArray.length; i++) {
+									buffer.writeUInt8(byteArray[i], i);
+								}
+							}
+
 							return res.json(insertResults);
 
 						});
