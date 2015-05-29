@@ -10,6 +10,7 @@
     "express": "^4.12.3",
     "express-stormpath": "^1.0.5",
     "jade": "^1.10.0",
+    "mkdirp": "^0.5.1",
     "pg": "^4.3.0",
     "pg-native": "^1.8.1",
     "querystring": "^0.2.0",

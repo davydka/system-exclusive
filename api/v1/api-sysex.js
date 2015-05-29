@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var stormpath = require('express-stormpath');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 module.exports = function(app){
 	app.use(bodyParser.json({limit: '50mb'}));
@@ -51,14 +52,25 @@ module.exports = function(app){
 							client.end();
 
 							if(insertResults.length){
-								var fileName = insertResults[0].id;
-								console.log();
+								var fileName = insertResults[0].id+'.syx';
+								var fullPath = 'files/'+user_id+'/';
+								var byteArray = new Uint8Array(data[0]);
 
 								var buffer = new Buffer(byteArray.length);
 
 								for (var i = 0; i < byteArray.length; i++) {
 									buffer.writeUInt8(byteArray[i], i);
 								}
+
+								mkdirp(fullPath.slice(0, -1), function (err) {
+									if (err) {
+										console.error(err)
+									} else {
+										fs.writeFileSync(fullPath+fileName, buffer);
+									}
+								});
+
+
 							}
 
 							return res.json(insertResults);
