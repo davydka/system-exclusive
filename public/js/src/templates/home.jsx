@@ -184,7 +184,7 @@ module.exports = React.createClass({
 			</div>
 
 			<br/>
-			<h3>Message Library</h3>
+			{this.props.serverSysex.length ? <h3>Message Library</h3> : ""}
 			<TableData
 				output={this.props.output}
 				serverSysex = {this.props.serverSysex}
@@ -193,7 +193,6 @@ module.exports = React.createClass({
 				handleInlineEditClick={this.handleInlineEditClick}
 				/>
 
-			<br/>
 			<h3>Controls</h3>
 			<PanelMain></PanelMain>
 

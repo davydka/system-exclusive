@@ -70,23 +70,26 @@ module.exports = React.createClass({
 				</tr>
 			}.bind(this));
 
-			return <table className="data-table table table-hover table-striped">
-				<thead>
-				<tr>
-					<th>ID</th>
-					<th>Title</th>
-					<th>Description</th>
-					<th>
+			return <div>
+				<table className="data-table table table-hover table-striped">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>Title</th>
+						<th>Description</th>
+						<th>
 
-					</th>
-				</tr>
-				</thead>
-				<tbody>
+						</th>
+					</tr>
+					</thead>
+					<tbody>
 
-				{rows}
+					{rows}
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+				<br/>
+			</div>
 		} else {
 			return null;
 		}
