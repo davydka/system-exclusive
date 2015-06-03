@@ -5,21 +5,7 @@ var S = require('string');
 module.exports = React.createClass({
 	handleInlinePlayClick: function(index){
 		var id = this.props.serverSysex[index].id;
-		this.getIndividualSysex(id);
-	},
 
-	handleInlineDownloadClick: function(index){
-		this.props.handleInlineDownloadClick(
-			this.props.serverSysex[index].data,
-			this.props.serverSysex[index].title
-		);
-	},
-
-	handleInlineEditClick: function(index){
-		this.props.handleInlineEditClick(index);
-	},
-
-	getIndividualSysex: function(id){
 		$.get('/api/v1/sysex/'+id, function(data){
 
 			var byteArray = [];
@@ -34,6 +20,55 @@ module.exports = React.createClass({
 			//console.log([byteArray]);
 
 			this.props.handlePlayClick([byteArray]);
+
+		}.bind(this));
+	},
+
+	handleInlineDownloadClick: function(index){
+		var id = this.props.serverSysex[index].id;
+
+		$.get('/api/v1/sysex/'+id, function(data){
+
+			var byteArray = [];
+			var req = new XMLHttpRequest();
+			req.open('GET',  data[0].filePath, false);
+			req.overrideMimeType('text\/plain; charset=x-user-defined');
+			req.send(null);
+			if (req.status != 200) return byteArray;
+			for (var i = 0; i < req.responseText.length; ++i) {
+				byteArray.push(req.responseText.charCodeAt(i) & 0xff)
+			}
+			//console.log([byteArray]);
+
+			this.props.handleInlineDownloadClick(
+				[byteArray],
+				this.props.serverSysex[index].title
+			);
+
+		}.bind(this));
+
+	},
+
+	handleInlineEditClick: function(index){
+		this.props.handleInlineEditClick(index);
+	},
+
+	getIndividualSysex: function(id, callback){
+		$.get('/api/v1/sysex/'+id, function(data){
+
+			var byteArray = [];
+			var req = new XMLHttpRequest();
+			req.open('GET',  data[0].filePath, false);
+			req.overrideMimeType('text\/plain; charset=x-user-defined');
+			req.send(null);
+			if (req.status != 200) return byteArray;
+			for (var i = 0; i < req.responseText.length; ++i) {
+				byteArray.push(req.responseText.charCodeAt(i) & 0xff)
+			}
+			//console.log([byteArray]);
+
+			callback([byteArray]);
+
 		}.bind(this));
 	},
 
