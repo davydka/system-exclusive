@@ -91,6 +91,7 @@ app.get('/syx/:sysex_id', function (req, res) {
 
 //app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use('/files', express.static('files'));
 
 require('./api/v1/api-sysex.js')(app);
 require('./api/v1/api-user.js')(app);

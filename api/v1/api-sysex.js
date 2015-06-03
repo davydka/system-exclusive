@@ -54,19 +54,28 @@ module.exports = function(app){
 							if(insertResults.length){
 								var fileName = insertResults[0].id+'.syx';
 								var fullPath = 'files/'+user_id+'/';
-								var byteArray = new Uint8Array(data[0]);
 
-								var buffer = new Buffer(byteArray.length);
+								var bufferArrays = [];
 
-								for (var i = 0; i < byteArray.length; i++) {
-									buffer.writeUInt8(byteArray[i], i);
-								}
+								data.map(function(item){
+									var byteArray = new Uint8Array(item);
+									var buffer = new Buffer(byteArray.length);
+
+									for (var i = 0; i < byteArray.length; i++) {
+										buffer.writeUInt8(byteArray[i], i);
+									}
+									bufferArrays.push(buffer);
+								});
+
+
+								var bufferContainer = Buffer.concat(bufferArrays);
+
 
 								mkdirp(fullPath.slice(0, -1), function (err) {
 									if (err) {
 										console.error(err)
 									} else {
-										fs.writeFileSync(fullPath+fileName, buffer);
+										fs.writeFileSync(fullPath+fileName, bufferContainer);
 									}
 								});
 
@@ -99,7 +108,7 @@ module.exports = function(app){
 		var id = req.params.sysex_id;
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('SELECT * FROM sysex where id = $1', [id]);
+			var query = client.query('SELECT id, ts, description, title, user_id FROM sysex where id = $1', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {
@@ -109,6 +118,8 @@ module.exports = function(app){
 			// After all data is returned, close connection and return results
 			query.on('end', function () {
 				client.end();
+				var filePath = '/files/'+results[0].user_id+'/'+results[0].id+'.syx'
+				results[0].filePath = filePath;
 				return res.json(results);
 
 			});

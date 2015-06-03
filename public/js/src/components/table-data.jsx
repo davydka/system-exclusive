@@ -21,15 +21,19 @@ module.exports = React.createClass({
 
 	getIndividualSysex: function(id){
 		$.get('/api/v1/sysex/'+id, function(data){
-			// Data is coming back as a Postgres array, so we clean it up here.
-			data.map(function(item, index){
-				var cleanData = item.data;
-				cleanData = S(cleanData).replaceAll('{', '[').s;
-				cleanData = S(cleanData).replaceAll('}', ']').s;
 
-				return item.data = JSON.parse(cleanData);
-			});
-			this.props.handlePlayClick(data[0].data);
+			var byteArray = [];
+			var req = new XMLHttpRequest();
+			req.open('GET',  data[0].filePath, false);
+			req.overrideMimeType('text\/plain; charset=x-user-defined');
+			req.send(null);
+			if (req.status != 200) return byteArray;
+			for (var i = 0; i < req.responseText.length; ++i) {
+				byteArray.push(req.responseText.charCodeAt(i) & 0xff)
+			}
+			//console.log([byteArray]);
+
+			this.props.handlePlayClick([byteArray]);
 		}.bind(this));
 	},
 
