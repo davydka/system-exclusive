@@ -277,6 +277,9 @@ module.exports = React.createClass({
 			data = this.state.sysex;
 			title = 'sysex';
 		}
+		if(title == ''){
+			title = 'sysex';
+		}
 		//console.log(data); //this is coming through as strings instead of numbers
 		//console.log(this.state.sysex);
 
