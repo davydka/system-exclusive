@@ -7,6 +7,16 @@ module.exports = React.createClass({
 	},
 
 	render:function(){
+		var saveButton = <button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-primary save">
+			Save
+		</button>;
+
+		if(this.props.saving){
+			saveButton = <button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-warning save disabled">
+				Saving... <span><img src="/images/banana.gif" alt="Saving"/></span>
+			</button>;
+		}
+
 		return <div id="modalSave" className="modal fade" role="dialog">
 			<div className="modal-dialog">
 				<div className="modal-content">
@@ -29,9 +39,7 @@ module.exports = React.createClass({
 								<input type="text" className="form-control" name="save-description" placeholder="I remember composing this on long summer's evening." aria-describedby="save-description" />
 							</div>
 							<br/>
-							<button ref="saveButton" onClick={this.handleSaveClick2} className="btn btn-primary save">
-								Save
-							</button>
+							{saveButton}
 						</form>
 					</div>
 				</div>

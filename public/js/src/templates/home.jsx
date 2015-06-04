@@ -200,7 +200,7 @@ module.exports = React.createClass({
 
 			<ModalEdit modalData={this.state.modalData} handleSaveClick2={this.handleSaveClick2} handleDeleteClick={this.handleDeleteClick} ></ModalEdit>
 
-			<ModalSave handleSaveClick2={this.handleSaveClick2} ></ModalSave>
+			<ModalSave saving={this.props.saving} handleSaveClick2={this.handleSaveClick2} ></ModalSave>
 
 		</div>
 	}

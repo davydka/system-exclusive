@@ -30,6 +30,7 @@ module.exports = React.createClass({
 			panelClassName: 'hide',
 			userId: Cookie.load('u'),
 			recording: false,
+			saving: false,
 			serverSysex: [],
 			detailData: undefined,
 			sysex: []
@@ -78,18 +79,6 @@ module.exports = React.createClass({
 				this.logOutCookie();
 				return;
 			}
-
-			//console.log(data);
-			// Data is coming back as a Postgres array, so we clean it up here.
-			//data.map(function(item, index){
-			//	var cleanData = item.data;
-			//
-			//	cleanData = S(cleanData).replaceAll('{', '[').s;
-			//	cleanData = S(cleanData).replaceAll('}', ']').s;
-			//
-			//	return item.data = JSON.parse(cleanData);
-			//});
-			//console.log(data);
 
 			this.setState({
 				serverSysex: data
@@ -179,6 +168,7 @@ module.exports = React.createClass({
 
 
 		var normalArray = [];
+		// TODO: see about just sending binary here
 		// We do this to convert Uint8Array into an normal array
 		// because this changes the way the data stores the data
 		this.state.sysex.map(function(item, index){
@@ -192,7 +182,7 @@ module.exports = React.createClass({
 		});
 
 
-		//console.log(normalArrayData);
+		//console.log(this.state.saving);
 		//return;
 
 		if(id != ''){
@@ -206,6 +196,16 @@ module.exports = React.createClass({
 					title: title,
 					id: id
 				}),
+				beforeSend: function(){
+					this.setState({
+						saving: true
+					});
+				}.bind(this),
+				complete: function(){
+					this.setState({
+						saving: false
+					});
+				}.bind(this),
 				success: this.closeModalAndGetSysex
 			});
 		} else {
@@ -220,6 +220,16 @@ module.exports = React.createClass({
 					user_id: this.state.user_id,
 					data: normalArray
 				}),
+				beforeSend: function(){
+					this.setState({
+						saving: true
+					});
+				}.bind(this),
+				complete: function(){
+					this.setState({
+						saving: false
+					});
+				}.bind(this),
 				success: this.closeModalAndGetSysex
 			});
 		}
@@ -430,6 +440,7 @@ module.exports = React.createClass({
 			sysex = {this.state.sysex}
 			serverSysex = {this.state.serverSysex}
 			recording={this.state.recording}
+			saving={this.state.saving}
 			handleRecordClick={this.handleRecordClick}
 			handlePlayClick={this.handlePlayClick}
 			handleSaveClick={this.handleSaveClick}
