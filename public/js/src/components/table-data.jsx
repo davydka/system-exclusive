@@ -3,25 +3,70 @@ var Sizeof = require('sizeof');
 var S = require('string');
 
 module.exports = React.createClass({
+
+	getInitialState: function(){
+		return {
+			gettingFile: false,
+			sent: false,
+			playing: false
+		}
+	},
+
 	handleInlinePlayClick: function(index){
 		var id = this.props.serverSysex[index].id;
 
-		$.get('/api/v1/sysex/'+id, function(data){
+		// TODO see about getting this down to one ajax request, new API endpoint?
+		$.ajax({
+			type: 'GET',
+			url: '/api/v1/sysex/'+id,
+			beforeSend: function(){
+				this.setState({
+					gettingFile: id,
+					sent: false
+				});
+			}.bind(this),
+			complete: function(){
 
-			var byteArray = [];
-			var req = new XMLHttpRequest();
-			req.open('GET',  data[0].filePath, false);
-			req.overrideMimeType('text\/plain; charset=x-user-defined');
-			req.send(null);
-			if (req.status != 200) return byteArray;
-			for (var i = 0; i < req.responseText.length; ++i) {
-				byteArray.push(req.responseText.charCodeAt(i) & 0xff)
-			}
-			//console.log([byteArray]);
+			}.bind(this),
+			success: function(data){
+				var byteArray = [];
+				var req = new XMLHttpRequest();
+				req.open('GET',  data[0].filePath, false);
+				req.overrideMimeType('text\/plain; charset=x-user-defined');
+				req.send(null);
+				if (req.status != 200) return byteArray;
+				for (var i = 0; i < req.responseText.length; ++i) {
+					byteArray.push(req.responseText.charCodeAt(i) & 0xff)
+				}
+				//console.log([byteArray]);
 
-			this.props.handlePlayClick([byteArray]);
+				//this.setState({
+				//	gettingFile: false
+				//});
+				//this.props.setPlayingState("play");
 
-		}.bind(this));
+				this.props.handlePlayClick([byteArray]);
+				this.setState({
+					sent: true
+				});
+			}.bind(this)
+		});
+		//$.get('/api/v1/sysex/'+id, function(data){
+		//
+		//	var byteArray = [];
+		//	var req = new XMLHttpRequest();
+		//	req.open('GET',  data[0].filePath, false);
+		//	req.overrideMimeType('text\/plain; charset=x-user-defined');
+		//	req.send(null);
+		//	if (req.status != 200) return byteArray;
+		//	for (var i = 0; i < req.responseText.length; ++i) {
+		//		byteArray.push(req.responseText.charCodeAt(i) & 0xff)
+		//	}
+		//	//console.log([byteArray]);
+		//
+		//	this.props.handlePlayClick([byteArray]);
+		//
+		//}.bind(this));
 	},
 
 	handleInlineDownloadClick: function(index){
@@ -74,7 +119,20 @@ module.exports = React.createClass({
 
 	render:function(){
 		if(this.props.serverSysex.length){
+
 			var rows = this.props.serverSysex.map(function(item, index){
+
+				var playButton = <button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
+					<span className="glyphicon glyphicon-play" ></span>
+					{this.state.sent && item.id == this.state.gettingFile ? 'Message Sent' : 'Play'}
+				</button>;
+
+				if(item.id == this.state.gettingFile && !this.state.sent){
+					playButton = <button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-warning play btn-xs disabled">
+						<span className="glyphicon glyphicon-play" ></span>
+						Fetching file...
+					</button>;
+				}
 
 				return <tr>
 					<td>{item.id}</td>
@@ -82,10 +140,7 @@ module.exports = React.createClass({
 					<td>{item.description}</td>
 					<td>
 						<div className="table-controls">
-							<button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-success play btn-xs">
-								<span className="glyphicon glyphicon-play" ></span>
-								Play
-							</button>
+							{playButton}
 
 							<button ref="downloadButton" onClick={this.handleInlineDownloadClick.bind(this, index)} className="btn btn-primary download btn-xs">
 								<span className="glyphicon glyphicon-download-alt" ></span>
