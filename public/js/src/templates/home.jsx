@@ -118,7 +118,7 @@ module.exports = React.createClass({
 
 		var details = null;
 
-		if(typeof this.props.detailData != 'undefined' && !this.props.recording){
+		if(typeof this.props.detailData != 'undefined' && !this.props.recording && this.props.isDetail){
 			var kittenString = "https://placekitten.com/41"+this.state.sizeX+"/30"+this.state.sizeY;
 
 			details = <div className="jumbotron details">
@@ -140,6 +140,12 @@ module.exports = React.createClass({
 						</div>
 					</div>
 				</div>
+			</div>
+		} else if(typeof this.props.detailData == 'undefined' && !this.props.recording && this.props.isDetail){
+			details = <div className="jumbotron details details-loading">
+				<img src="/images/banana.gif" alt="Details"/>
+				<h4>Loading details...</h4>
+				<img src="/images/banana.gif" alt="Details"/>
 			</div>
 		}
 

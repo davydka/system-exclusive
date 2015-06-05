@@ -33,6 +33,7 @@ module.exports = React.createClass({
 			saving: false,
 			serverSysex: [],
 			detailData: undefined,
+			isDetail: false,
 			sysex: []
 		}
 	},
@@ -63,6 +64,9 @@ module.exports = React.createClass({
 
 		// Are we on a syx detail page?
 		if(location.pathname.toLowerCase().indexOf('syx') > -1){
+			this.setState({
+				isDetail: true
+			});
 			var id = location.pathname.toLowerCase().substr(location.pathname.toLowerCase().lastIndexOf('/') + 1);
 			this.getIndividualSysex(id);
 		}
@@ -451,6 +455,7 @@ module.exports = React.createClass({
 			handleDownloadClick={this.handleDownloadClick}
 			userId={this.state.userId}
 			detailData= {this.state.detailData}
+			isDetail= {this.state.isDetail}
 			/>;
 	}
 });

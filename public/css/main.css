@@ -47,6 +47,9 @@ iframe {
 .details .row img {
   max-width: 100%; }
 
+.details-loading {
+  text-align: center; }
+
 .midi-activity-container {
   margin-top: 40px; }
 
