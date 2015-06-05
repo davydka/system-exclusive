@@ -6,6 +6,8 @@ var pg = require('pg').native;
 var bodyParser = require('body-parser');
 var stormpath = require('express-stormpath');
 var ejs = require('ejs');
+var querystring = require('querystring');
+var url = require('url');
 
 var environment = process.env.NODE_ENV;
 
@@ -38,13 +40,26 @@ app.use(stormpath.init(app, {
 				console.log(err);
 			}
 		});
+
+		var url_parts = url.parse(req.header('Referer'), true);
+		var referrer = url_parts.query;
+		if(typeof referrer.returnTo != 'undefined'){
+			res.redirect(referrer.returnTo);
+		} else {
+			next();
+		}
+
 		//console.log('User:', account.email, 'just registered!');
 		next();
 	},
 	postLoginHandler: function(account, req, res, next) {
-		//req.user.id = 1;
-		//console.log('User:', account.email, 'just logged in!');
-		next();
+		var url_parts = url.parse(req.header('Referer'), true);
+		var referrer = url_parts.query;
+		if(typeof referrer.returnTo != 'undefined'){
+			res.redirect(referrer.returnTo);
+		} else {
+			next();
+		}
 	}
 }));
 

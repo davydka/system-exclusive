@@ -6,19 +6,24 @@ module.exports = React.createClass({
 	},
 
 	render:function(){
+		var returnTo = '';
+		if(this.props.isDetail){
+			returnTo = '?returnTo='+location.pathname;
+		}
+
 		if(typeof this.props.userId == 'undefined'){
 			return <div className="btn-group account-group" role="group" >
 				<button ref="loginButton" className="btn btn-default login ">
-					<a href="/login">Login</a>
+					<a href={"/login"+returnTo}>Login</a>
 				</button>
 				<button ref="signupButton" className="btn btn-default signup ">
-					<a href="/register">Signup</a>
+					<a href={"/register"+returnTo}>Signup</a>
 				</button>
 			</div>;
 		} else {
 			return <div className="btn-group account-group" role="group" >
 				<button ref="logoutButton" className="btn btn-default logout ">
-					<a href="/logout">Logout</a>
+					<a href={"/logout"+returnTo}>Logout</a>
 				</button>
 			</div>;
 		}

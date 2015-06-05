@@ -73,7 +73,6 @@ module.exports = React.createClass({
 				show: true
 			});
 		} else {
-			console.log(location.pathname);
 			var returnTo = '';
 			if(this.props.isDetail){
 				returnTo = '?returnTo='+location.pathname;
