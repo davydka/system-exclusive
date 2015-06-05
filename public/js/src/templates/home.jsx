@@ -10,6 +10,7 @@ var ButtonSave		= require('../components/button-save');
 var ButtonDownload	= require('../components/button-download');
 var AccountGroup	= require('../components/account-group');
 var TableData		= require('../components/table-data');
+var ModalAlert		= require('../components/modal-alert');
 var ModalSave		= require('../components/modal-save');
 var ModalLogin		= require('../components/modal-login');
 var ModalEdit		= require('../components/modal-edit');
@@ -19,6 +20,8 @@ module.exports = React.createClass({
 
 	getInitialState: function(){
 		return {
+			messageTitle: '',
+			messageBody: '',
 			modalData: this.props.sysex,
 			sizeX: this.getRandomInt(0,9),
 			sizeY: this.getRandomInt(0,9)
@@ -65,9 +68,33 @@ module.exports = React.createClass({
 	},
 
 	handleSaveClick1: function(childComponent){
-		$('#modalSave').modal({
-			show: true
-		});
+		if(typeof this.props.userId != 'undefined'){
+			$('#modalSave').modal({
+				show: true
+			});
+		} else {
+			console.log(location.pathname);
+			var returnTo = '';
+			if(this.props.isDetail){
+				returnTo = '?returnTo='+location.pathname;
+			}
+
+			this.setState({
+				messageTitle: 'Please login or register to save Sysex file to your account.',
+				messageBody: <div className="btn-group account-group-modal" role="group" >
+					<button className="btn btn-default login ">
+						<a href={"/login"+returnTo}>Login</a>
+					</button>
+					<button className="btn btn-default signup ">
+						<a href={"/register"+returnTo}>Signup</a>
+					</button>
+				</div>
+			})
+
+			$('#modalAlert').modal({
+				show: true
+			});
+		}
 	},
 
 	handleSaveClick2: function(data){
@@ -94,8 +121,6 @@ module.exports = React.createClass({
 		$('#modalEdit').modal({
 			show: true
 		});
-
-		//console.log(this.props.serverSysex[index].title)
 	},
 
 	handleEditClick: function(){
@@ -113,8 +138,6 @@ module.exports = React.createClass({
 	},
 
 	render: function(){
-		//console.log(this.state.modalData);
-		//console.log(this.props.sysex);
 
 		var midiInputs = [];
 		this.props.midi.inputs.forEach( function( key, port ) {
@@ -221,6 +244,8 @@ module.exports = React.createClass({
 
 			<h3>Controls</h3>
 			<PanelMain></PanelMain>
+
+			<ModalAlert title={this.state.messageTitle} body={this.state.messageBody}></ModalAlert>
 
 			<ModalLogin></ModalLogin>
 
