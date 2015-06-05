@@ -170,7 +170,7 @@ module.exports = React.createClass({
 							<h3>{this.props.detailData.title}</h3>
 							<p>{this.props.detailData.description}</p>
 							<br/>
-							<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+							<ButtonPlay output={this.props.output} inlinePlayText={this.props.inlinePlayText} handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 							<br/>
 							{buttonSaveOrEdit}
 							<br/>
@@ -225,7 +225,7 @@ module.exports = React.createClass({
 						<br/>
 					</div>
 					<div className="col-md-8">
-						<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
+						<ButtonPlay output={this.props.output} inlinePlayText={this.props.inlinePlayText} handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 						<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />
 						<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 					</div>

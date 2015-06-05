@@ -147,6 +147,9 @@ module.exports = React.createClass({
 	},
 
 	handlePlayClick: function(data){
+		this.setState({
+			inlinePlayText: false
+		})
 		if(typeof this.state.output != 'undefined'){
 			for(var i = 0; i < data.length; i++){
 				this.state.output.send(data[i]);

@@ -5,7 +5,8 @@ module.exports = React.createClass({
 	getInitialState: function(){
 		return {
 			playing: false,
-			sent: false
+			sent: false,
+			playText: 'Play'
 		}
 	},
 
@@ -17,9 +18,20 @@ module.exports = React.createClass({
 
 	handlePlayClick: function(){
 		React.findDOMNode(this.refs.playButton).blur();
+
+		if(typeof this.props.output == 'undefined'){
+			$('.output-holder').addClass('bg-warning');
+			this.setState({
+				sent: true,
+				playText: 'Select a Midi output'
+			});
+			return;
+		}
+
 		this.props.handlePlayClick();
 		this.setState({
-			sent: true
+			sent: true,
+			playText: 'Message Sent'
 		});
 
 		TweenLite.killDelayedCallsTo(this.resetSentState);
@@ -34,9 +46,9 @@ module.exports = React.createClass({
 				Play
 			</button>
 		} else if(this.props.sysex.length && this.state.sent){
-			return <button ref="playButton" onClick={this.handlePlayClick} className="btn btn-warning play">
+			return <button ref="playButton" onClick={this.handlePlayClick} className={this.props.inlinePlayText ? "btn btn-success play" : "btn btn-warning play"}>
 				<span className="glyphicon glyphicon-play" ></span>
-				Message Sent
+				{this.props.inlinePlayText ? this.props.inlinePlayText : this.state.playText}
 			</button>
 		} else {
 			return null;
