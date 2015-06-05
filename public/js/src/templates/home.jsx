@@ -98,12 +98,23 @@ module.exports = React.createClass({
 		//console.log(this.props.serverSysex[index].title)
 	},
 
+	handleEditClick: function(){
+		this.setState({
+			modalData: this.props.detailData
+		});
+
+		$('#modalEdit').modal({
+			show: true
+		});
+	},
+
 	getRandomInt: function(min, max) {
 		return Math.floor(Math.random() * (max - min)) + min;
 	},
 
 	render: function(){
-		//console.log(this.props.midi.inputs);
+		//console.log(this.state.modalData);
+		//console.log(this.props.sysex);
 
 		var midiInputs = [];
 		this.props.midi.inputs.forEach( function( key, port ) {
@@ -121,6 +132,15 @@ module.exports = React.createClass({
 		if(typeof this.props.detailData != 'undefined' && !this.props.recording && this.props.isDetail){
 			var kittenString = "https://placekitten.com/41"+this.state.sizeX+"/30"+this.state.sizeY;
 
+			var buttonSaveOrEdit = <button ref="editButton" onClick={this.handleEditClick} className="btn btn-default edit">
+				<span className="glyphicon glyphicon-pencil" ></span>
+				Edit
+			</button>;
+
+			if(typeof this.props.userId == 'undefined'){
+				buttonSaveOrEdit = <ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />;
+			}
+
 			details = <div className="jumbotron details">
 				<div className="container">
 					<div className="row">
@@ -130,7 +150,7 @@ module.exports = React.createClass({
 							<br/>
 							<ButtonPlay handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 							<br/>
-							<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />
+							{buttonSaveOrEdit}
 							<br/>
 							<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 							<br/>
@@ -155,7 +175,7 @@ module.exports = React.createClass({
 
 			<AccountGroup userId = {this.props.userId} />
 
-			<h3>Input</h3>
+			<h3>Input {this.props.userId}</h3>
 			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
 
 			<h3>Output</h3>

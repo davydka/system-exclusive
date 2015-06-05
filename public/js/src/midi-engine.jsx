@@ -148,7 +148,11 @@ module.exports = React.createClass({
 
 	closeModalAndGetSysex: function(){
 		$('.modal').modal('hide');
-		this.getUserSysex();
+		if(this.state.isDetail){
+			this.getIndividualSysex(this.state.detailData.id);
+		} else {
+			this.getUserSysex();
+		}
 	},
 
 	handleSaveClick: function(input){

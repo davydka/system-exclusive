@@ -146,12 +146,12 @@ module.exports = React.createClass({
 								<span className="glyphicon glyphicon-download-alt" ></span>
 								Download
 							</button>
-							<button ref="deleteButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
+							<button ref="shareButton" onClick={this.handleInlineShareClick} className="btn btn-default share btn-xs">
 								<span className="glyphicon glyphicon-globe" ></span>
 								<a href={"/syx/"+item.id}>Share</a>
 							</button>
 
-							<button ref="deleteButton" onClick={this.handleInlineEditClick.bind(this, index)} className="btn btn-default edit btn-xs">
+							<button ref="editButton" onClick={this.handleInlineEditClick.bind(this, index)} className="btn btn-default edit btn-xs">
 								<span className="glyphicon glyphicon-pencil" ></span>
 								Edit
 							</button>
