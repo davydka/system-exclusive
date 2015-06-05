@@ -72,6 +72,11 @@ iframe {
 	text-align: center;
 }
 
+.input-holder.bg-warning,
+.output-holder.bg-warning {
+	padding:1px 14px 14px;
+}
+
 .midi-activity-container {
   margin-top:40px;
 }

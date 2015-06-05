@@ -197,11 +197,15 @@ module.exports = React.createClass({
 
 			<AccountGroup userId = {this.props.userId} />
 
-			<h3>Input {this.props.userId}</h3>
-			<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
+			<div className="input-holder">
+				<h3>Input {this.props.userId}</h3>
+				<Select onChangeHandler={this.inputChangeHandler} initialText="Select a Midi Input" items={midiInputs} className="midiInputSelect" initialInput={this.props.initialInput} initialOutput={this.props.initialOutput} />
+			</div>
 
-			<h3>Output</h3>
-			<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiOutputs} className="midiOutputSelect" initialInput={this.props.initialOutput} initialOutput={this.props.initialOutput} />
+			<div className="output-holder">
+				<h3>Output</h3>
+				<Select onChangeHandler={this.outputChangeHandler} initialText="Select a Midi Output" items={midiOutputs} className="midiOutputSelect" initialInput={this.props.initialOutput} initialOutput={this.props.initialOutput} />
+			</div>
 
 			<div className={this.props.className+" midi-activity-container"}>
 				<h3>Midi Activity</h3>
@@ -217,7 +221,7 @@ module.exports = React.createClass({
 				{details}
 				<div className="row">
 					<div className="col-md-4">
-						<ButtonRecord handleRecordClick={this.handleRecordClick} recording={this.props.recording} detailData={this.props.detailData} />
+						<ButtonRecord text={this.props.recordText} handleRecordClick={this.handleRecordClick} recording={this.props.recording} detailData={this.props.detailData} />
 						<br/>
 					</div>
 					<div className="col-md-8">
@@ -234,11 +238,12 @@ module.exports = React.createClass({
 			<br/>
 			{this.props.serverSysex.length ? <h3>Message Library</h3> : ""}
 			<TableData
-				output={this.props.output}
+				output ={this.props.output}
+				inlinePlayText = {this.props.inlinePlayText}
 				serverSysex = {this.props.serverSysex}
-				handlePlayClick={this.handleInlinePlayClick}
-				handleInlineDownloadClick={this.handleInlineDownloadClick}
-				handleInlineEditClick={this.handleInlineEditClick}
+				handlePlayClick = {this.handleInlinePlayClick}
+				handleInlineDownloadClick = {this.handleInlineDownloadClick}
+				handleInlineEditClick = {this.handleInlineEditClick}
 				/>
 
 			<h3>Controls</h3>

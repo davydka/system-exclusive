@@ -18,6 +18,7 @@ module.exports = React.createClass({
 	clockCount: 1,
 	timeline: '',
 	lastTime: 0,
+	defaultRecordText: 'Record New System Exclusive Messages',
 
 
 	getInitialState: function(){
@@ -30,10 +31,12 @@ module.exports = React.createClass({
 			panelClassName: 'hide',
 			userId: Cookie.load('u'),
 			recording: false,
+			recordText: this.defaultRecordText,
 			saving: false,
 			serverSysex: [],
 			detailData: undefined,
 			isDetail: false,
+			inlinePlayText: false,
 			sysex: []
 		}
 	},
@@ -121,16 +124,23 @@ module.exports = React.createClass({
 
 	handleRecordClick: function(){
 		if(typeof this.state.input == 'undefined'){
+			$('.input-holder').addClass('bg-warning');
+			this.setState({
+				recordText: 'Please select a Midi input'
+			});
+			//console.log('alert user they need to select an input');
 			return false;
 		}
 
 		if(this.state.recording){
 			this.setState({
-				recording: false
+				recording: false,
+				recordText: defaultRecordText
 			})
 		} else {
 			this.setState({
 				recording: true,
+				recordText: 'Listening...',
 				sysex: []
 			})
 		}
@@ -358,19 +368,24 @@ module.exports = React.createClass({
 		var input = this.state.midi.inputs.get(id);
 		input.onmidimessage = this.midiInputHandler;
 
+		$('.input-holder').removeClass('bg-warning');
+
 		this.setState({
 			input: input,
-			recording: true
+			recording: true,
+			recordText: 'Listening...'
 		});
 
-		//var obj = { Url: location.origin+"?input="+input.id+"&output" };
-		//history.pushState(obj, "", obj.Url);
 		Cookie.save('input', input.id);
 	},
 
 	setOutput: function(id){
+		$('.output-holder').removeClass('bg-warning');
+		//$('.table-controls .btn-warning')
+
 		this.setState({
-			output: this.state.midi.outputs.get(id)
+			output: this.state.midi.outputs.get(id),
+			inlinePlayText: "Play"
 		})
 
 		Cookie.save('output', id);
@@ -451,6 +466,7 @@ module.exports = React.createClass({
 			sysex = {this.state.sysex}
 			serverSysex = {this.state.serverSysex}
 			recording={this.state.recording}
+			recordText={this.state.recordText}
 			saving={this.state.saving}
 			handleRecordClick={this.handleRecordClick}
 			handlePlayClick={this.handlePlayClick}
@@ -460,6 +476,7 @@ module.exports = React.createClass({
 			userId={this.state.userId}
 			detailData= {this.state.detailData}
 			isDetail= {this.state.isDetail}
+			inlinePlayText= {this.state.inlinePlayText}
 			/>;
 	}
 });

@@ -8,12 +8,26 @@ module.exports = React.createClass({
 		return {
 			gettingFile: false,
 			sent: false,
-			playing: false
+			playing: false,
+			playText: 'play',
+			playEnabled: true
 		}
 	},
 
 	handleInlinePlayClick: function(index){
 		var id = this.props.serverSysex[index].id;
+
+		if(typeof this.props.output == 'undefined'){
+			$('.output-holder').addClass('bg-warning');
+			this.setState({
+				gettingFile: id,
+				playText: 'Select a Midi Output',
+				sent: false,
+				playEnabled: true
+			})
+			//console.log('select output');
+			return;
+		}
 
 		// TODO see about getting this down to one ajax request, new API endpoint?
 		$.ajax({
@@ -22,7 +36,9 @@ module.exports = React.createClass({
 			beforeSend: function(){
 				this.setState({
 					gettingFile: id,
-					sent: false
+					playText: 'Fetching file...',
+					sent: false,
+					playEnabled: "disabled"
 				});
 			}.bind(this),
 			complete: function(){
@@ -47,7 +63,8 @@ module.exports = React.createClass({
 
 				this.props.handlePlayClick([byteArray]);
 				this.setState({
-					sent: true
+					sent: true,
+					playEnabled: true
 				});
 			}.bind(this)
 		});
@@ -128,9 +145,9 @@ module.exports = React.createClass({
 				</button>;
 
 				if(item.id == this.state.gettingFile && !this.state.sent){
-					playButton = <button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className="btn btn-warning play btn-xs disabled">
+					playButton = <button ref="playButton" onClick={this.handleInlinePlayClick.bind(this, index)} className={this.state.playEnabled+" btn btn-warning play btn-xs"}>
 						<span className="glyphicon glyphicon-play" ></span>
-						Fetching file...
+						{this.props.inlinePlayText ? this.props.inlinePlayText : this.state.playText}
 					</button>;
 				}
 
