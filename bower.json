@@ -19,6 +19,10 @@
     "bootstrap": "~3.3.4",
     "greensock": "~1.16.1",
     "nexusUI": "https://raw.githubusercontent.com/davydka/nexusUI/master/dist/nexusUI.min.js?1",
-    "file-saver.js": "~1.20150304.1"
+    "file-saver.js": "~1.20150304.1",
+    "threejs": "*",
+    "OrbitControls": "http://threejs.org/examples/js/controls/OrbitControls.js",
+    "OBJLoader": "http://threejs.org/examples/js/loaders/OBJLoader.js",
+    "d3": "~3.5.5"
   }
 }

@@ -15,6 +15,7 @@ var ModalSave		= require('../components/modal-save');
 var ModalLogin		= require('../components/modal-login');
 var ModalEdit		= require('../components/modal-edit');
 var PanelMain		= require('../components/panel-main');
+var Visualization	= require('../components/visualization2');
 
 module.exports = React.createClass({
 
@@ -178,7 +179,7 @@ module.exports = React.createClass({
 							<br/>
 						</div>
 						<div className="col-md-8">
-							<img src={kittenString} alt=""/>
+							<Visualization sysex={this.props.sysex} />
 						</div>
 					</div>
 				</div>

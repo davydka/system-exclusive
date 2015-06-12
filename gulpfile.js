@@ -58,6 +58,8 @@ gulp.task('wiredep', function () {
 		.pipe(wiredep())
 		.pipe(replace(/"bower_components/g, '"/bower_components'))
 		.pipe(replace(/dist\/jquery\.js/g, 'dist/jquery.min.js'))
+		.pipe(replace(/threejs\/build\/three\.js/g, 'threejs/build/three.min.js'))
+		.pipe(replace(/d3\/d3\.js/g, 'd3/d3.min.js'))
 		.pipe(replace(/dist\/js\/bootstrap\.js/g, 'dist/js/bootstrap.min.js'))
 		.pipe(replace(/uncompressed\/TweenMax\.js/g, 'minified/TweenMax.min.js'))
 		.pipe(replace(/dist\/css\/bootstrap\.css/g, 'dist/css/bootstrap.min.css'))

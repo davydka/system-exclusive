@@ -66,6 +66,21 @@ iframe {
 			max-width: 100%;
 		}
 	}
+
+	.visualization {
+		min-height: 300px;
+
+		span{
+			line-height: 2px;
+			height:2px;
+			width:2px;
+			border:none;
+			display: block;
+			float:left;
+			margin:0;
+			padding:0;
+		}
+	}
 }
 
 .details-loading {
