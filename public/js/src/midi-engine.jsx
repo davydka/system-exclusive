@@ -90,6 +90,8 @@ module.exports = React.createClass({
 			this.setState({
 				serverSysex: data
 			});
+
+
 		}.bind(this));
 	},
 

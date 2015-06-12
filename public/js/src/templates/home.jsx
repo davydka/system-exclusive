@@ -37,6 +37,34 @@ module.exports = React.createClass({
 
 		// Setup Nexus UI Controls
 		nx.init();
+
+	},
+
+	componentDidUpdate: function(){
+		var canvas = $('#visualization');
+
+		if(canvas.length && this.props.serverSysex.length){
+			canvas = canvas[0];
+			var context = canvas.getContext('2d');
+
+			// Set the height of the canvas based on how much data we're visualizing.
+			context.canvas.height = this.props.sysex[0].length / canvas.width;
+
+			this.props.sysex.map(function(item, index){
+				item.map(function(item1, index1){
+					var x = index1 % canvas.width;
+					var y = (index1 - x) / canvas.width;
+
+					context.fillStyle = "#000";
+					//console.log(item1);
+					//context.fillStyle = 'rgb(' + x + ',0 , 0)';
+					//context.fillStyle = 'rgb(255, 0 , 0)';
+
+					context.fillRect(0, 0, x, y);
+				});
+			});
+
+		}
 	},
 
 	inputChangeHandler: function(childComponent){
@@ -154,6 +182,8 @@ module.exports = React.createClass({
 		if(typeof this.props.detailData != 'undefined' && !this.props.recording && this.props.isDetail){
 			var kittenString = "https://placekitten.com/41"+this.state.sizeX+"/30"+this.state.sizeY;
 
+
+
 			var buttonSaveOrEdit = <button ref="editButton" onClick={this.handleEditClick} className="btn btn-default edit">
 				<span className="glyphicon glyphicon-pencil" ></span>
 				Edit
@@ -178,7 +208,7 @@ module.exports = React.createClass({
 							<br/>
 						</div>
 						<div className="col-md-8">
-							<img src={kittenString} alt=""/>
+							<canvas id="visualization" ref="visualization"></canvas>
 						</div>
 					</div>
 				</div>
