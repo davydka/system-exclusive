@@ -43,7 +43,7 @@ module.exports = React.createClass({
 	componentDidUpdate: function(){
 		var canvas = $('#visualization');
 
-		if(canvas.length && this.props.serverSysex.length){
+		if(canvas.length && this.props.serverSysex.length && this.props.sysex.length){
 			canvas = canvas[0];
 			var context = canvas.getContext('2d');
 
@@ -254,7 +254,7 @@ module.exports = React.createClass({
 						<ButtonRecord text={this.props.recordText} handleRecordClick={this.handleRecordClick} recording={this.props.recording} detailData={this.props.detailData} />
 						<br/>
 					</div>
-					<div className="col-md-8">
+					<div className={(this.props.isDetail ? "hide" : "")+" col-md-8 "}>
 						<ButtonPlay output={this.props.output} inlinePlayText={this.props.inlinePlayText} handlePlayClick={this.handlePlayClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 						<ButtonSave handleSaveClick1={this.handleSaveClick1} sysex={this.props.sysex} detailData={this.props.detailData} />
 						<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />

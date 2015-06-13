@@ -37,6 +37,7 @@ module.exports = React.createClass({
 			detailData: undefined,
 			isDetail: false,
 			inlinePlayText: false,
+			oldSysex: [],
 			sysex: []
 		}
 	},
@@ -111,6 +112,7 @@ module.exports = React.createClass({
 			this.setState({
 				detailData: data[0],
 				recording:false,
+				recordText: this.defaultRecordText,
 				sysex: [byteArray]
 			});
 		}.bind(this));
@@ -134,15 +136,23 @@ module.exports = React.createClass({
 			return false;
 		}
 
-		if(this.state.recording){
+		if(this.state.recording && this.state.sysex.length == 0){
 			this.setState({
 				recording: false,
-				recordText: defaultRecordText
+				recordText: this.defaultRecordText,
+				sysex: this.state.oldSysex
+			})
+		} else if(this.state.recording && this.state.sysex.length > 0){
+			this.setState({
+				recording: false,
+				recordText: this.defaultRecordText,
+				isDetail: false
 			})
 		} else {
 			this.setState({
 				recording: true,
 				recordText: 'Listening...',
+				oldSysex: this.state.sysex,
 				sysex: []
 			})
 		}
@@ -429,6 +439,7 @@ module.exports = React.createClass({
 		// Sysex Message
 		if(event.data[0] == 240 && this.state.recording){
 			this.setState({
+				isDetail: false,
 				sysex: this.state.sysex.concat([event.data])
 			});
 			//console.log(event.data);
