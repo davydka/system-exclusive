@@ -61,7 +61,7 @@ module.exports = React.createClass({
 			});
 		} else {
 			this.setState({
-				program: $('.save-program option:selected').val()
+				program: $('#modalEdit .save-program option:selected').val()
 			});
 		}
 	},
@@ -73,7 +73,7 @@ module.exports = React.createClass({
 			});
 		} else {
 			this.setState({
-				channel: $('.save-channel option:selected').val()
+				channel: $('#modalEdit .save-channel option:selected').val()
 			});
 		}
 	},

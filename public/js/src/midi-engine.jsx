@@ -413,6 +413,11 @@ module.exports = React.createClass({
 
 	setInput: function(id){
 		var input = this.state.midi.inputs.get(id);
+
+		if(typeof input == 'undefined'){
+			return;
+		}
+
 		input.onmidimessage = this.midiInputHandler;
 
 		$('.input-holder').removeClass('bg-warning');

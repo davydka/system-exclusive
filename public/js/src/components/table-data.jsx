@@ -159,8 +159,8 @@ module.exports = React.createClass({
 					<td>{item.id}</td>
 					<td>{item.title}</td>
 					<td>{item.description}</td>
-					<td>{item.channel}</td>
-					<td>{item.program}</td>
+					<td>{item.program == 0 ? "-" : item.channel}</td>
+					<td>{item.program == 0 ? "No" : item.program}</td>
 					<td>
 						<div className="table-controls">
 							{playButton}
