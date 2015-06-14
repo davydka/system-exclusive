@@ -55,12 +55,12 @@ module.exports = React.createClass({
 					var x = index1 % canvas.width;
 					var y = (index1 - x) / canvas.width;
 
-					context.fillStyle = "#000";
+					//context.fillStyle = "#000";
 					//console.log(item1);
-					//context.fillStyle = 'rgb(' + x + ',0 , 0)';
+					context.fillStyle = 'rgb(' + item1 + ',0 , 0)';
 					//context.fillStyle = 'rgb(255, 0 , 0)';
 
-					context.fillRect(0, 0, x, y);
+					context.fillRect(x, y, 1, 1);
 				});
 			});
 
