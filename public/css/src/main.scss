@@ -47,7 +47,19 @@ iframe {
 	}
 }
 
+#modalSave {
+
+	#save-program {
+		cursor: pointer;
+	}
+}
+
 #modalEdit {
+
+	#save-program {
+		cursor: pointer;
+	}
+
 	.delete {
 		float:right;
 	}
@@ -93,6 +105,21 @@ iframe {
 
 .list-item-holder img.list-item {
 	width:100%;
+}
+
+.message-library {
+
+	th {
+		cursor: default;
+
+		.header-program {
+			cursor: pointer;
+		}
+
+		span.glyphicon-question-sign {
+			color: #666;
+		}
+	}
 }
 
 .play-controls {

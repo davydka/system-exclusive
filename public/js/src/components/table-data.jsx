@@ -14,6 +14,12 @@ module.exports = React.createClass({
 		}
 	},
 
+	componentDidUpdate: function(){
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+	},
+
 	handleInlinePlayClick: function(index){
 		var id = this.props.serverSysex[index].id;
 		var program = this.props.serverSysex[index].program;
@@ -159,7 +165,6 @@ module.exports = React.createClass({
 					<td>{item.id}</td>
 					<td>{item.title}</td>
 					<td>{item.description}</td>
-					<td>{item.program == 0 ? "-" : item.channel}</td>
 					<td>{item.program == 0 ? "No" : item.program}</td>
 					<td>
 						<div className="table-controls">
@@ -183,15 +188,18 @@ module.exports = React.createClass({
 				</tr>
 			}.bind(this));
 
-			return <div>
+			return <div className="message-library">
 				<table className="data-table table table-hover table-striped">
 					<thead>
 					<tr>
 						<th>ID</th>
 						<th>Title</th>
 						<th>Description</th>
-						<th>Channel</th>
-						<th>Program</th>
+						<th>
+							<div className="header-program" data-toggle="tooltip" data-placement="top" title="Send a midi Program Change message after loading the sysex message. This is helpful on some synths to preview your new sound.">
+								Program <span className="glyphicon glyphicon-question-sign"></span>
+							</div>
+						</th>
 						<th>
 
 						</th>
