@@ -167,6 +167,7 @@ module.exports = React.createClass({
 		}
 	},
 
+
 	handlePlayClick: function(data){
 		this.setState({
 			inlinePlayText: false
