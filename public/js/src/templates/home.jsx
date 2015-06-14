@@ -47,8 +47,16 @@ module.exports = React.createClass({
 			canvas = canvas[0];
 			var context = canvas.getContext('2d');
 
-			// Set the height of the canvas based on how much data we're visualizing.
-			context.canvas.height = this.props.sysex[0].length / canvas.width;
+			pixelHeight = 1;
+			if(this.props.sysex[0].length > 150){
+				// Set the height of the canvas based on how much data we're visualizing.
+				context.canvas.height = this.props.sysex[0].length / canvas.width;
+				console.log(this.props.sysex[0].length);
+			} else {
+				pixelHeight = 150;
+			}
+
+
 
 			this.props.sysex.map(function(item, index){
 				item.map(function(item1, index1){
@@ -57,7 +65,7 @@ module.exports = React.createClass({
 
 					context.fillStyle = 'rgb(' + item1 + ','+ color.g +', '+ color.b +')';
 
-					context.fillRect(x, y, 1, 1);
+					context.fillRect(x, y, 1, pixelHeight);
 				}.bind(this));
 			}.bind(this));
 
@@ -201,7 +209,8 @@ module.exports = React.createClass({
 							<ButtonDownload handleDownloadClick={this.handleDownloadClick} sysex={this.props.sysex} detailData={this.props.detailData} />
 							<br/>
 						</div>
-						<div className="col-md-8">
+						<div className="col-md-8 visualizationContainer">
+							<h6>Visualization of Sysex File</h6>
 							<canvas id="visualization" ref="visualization"></canvas>
 						</div>
 					</div>
