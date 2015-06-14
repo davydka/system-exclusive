@@ -16,6 +16,8 @@ module.exports = function(app){
 		var description = req.body.description;
 		var title = req.body.title;
 		var user_id = req.body.user_id;
+		var channel = req.body.channel;
+		var program = req.body.program;
 
 		if(typeof req.user == 'undefined'){
 			res.status(401);
@@ -40,7 +42,7 @@ module.exports = function(app){
 					//console.log([data, description, title, user_id]);
 					pg.connect(process.env.DATABASE_URL, function(err, client) {
 						var insertResults = [];
-						var query = client.query('INSERT INTO sysex (id, ts, data, description, title, user_id) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4) RETURNING id', [data, description, title, user_id]);
+						var query = client.query('INSERT INTO sysex (id, ts, data, description, title, user_id, channel, program) VALUES (DEFAULT, DEFAULT, $1, $2, $3, $4, $5, $6) RETURNING id', [data, description, title, user_id, channel, program]);
 
 						// Stream results back one row at a time
 						query.on('row', function(row) {
@@ -108,7 +110,7 @@ module.exports = function(app){
 		var id = req.params.sysex_id;
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('SELECT id, ts, description, title, user_id FROM sysex where id = $1', [id]);
+			var query = client.query('SELECT id, ts, description, title, user_id, channel, program FROM sysex where id = $1', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {
@@ -137,7 +139,7 @@ module.exports = function(app){
 		var id = req.params.user_id;
 
 		pg.connect(process.env.DATABASE_URL, function(err, client) {
-			var query = client.query('SELECT id, ts, description, title, user_id FROM sysex where user_id = $1 ORDER by ts DESC', [id]);
+			var query = client.query('SELECT id, ts, description, title, user_id, channel, program FROM sysex where user_id = $1 ORDER by ts DESC', [id]);
 
 			// Stream results back one row at a time
 			query.on('row', function (row) {
@@ -161,10 +163,11 @@ module.exports = function(app){
 // Update
 	app.put('/api/v1/sysex/:sysex_id', jsonParser, function (req, res) {
 		var results = [];
-		var id = req.params.sysex_id;
 		var description = req.body.description;
 		var title = req.body.title;
 		var id = req.body.id;
+		var channel = req.body.channel;
+		var program = req.body.program;
 
 		if(typeof req.user == 'undefined'){
 			res.status(401);
@@ -178,9 +181,11 @@ module.exports = function(app){
 			//client.query('INSERT INTO data (sysex_id, key, value) VALUES ($1, $2, $3)', [id, "comment", req.body.comment]);
 			client.query('UPDATE sysex '+
 				'SET description = $1, '+
-				'title = $2 '+
+				'title = $2, '+
+				'channel = $4, '+
+				'program = $5 '+
 				'WHERE id = $3',
-			[description, title, id]);
+			[description, title, id, channel, program]);
 
 
 			var query = client.query('SELECT * FROM sysex where id = $1 order by ts desc', [id]);

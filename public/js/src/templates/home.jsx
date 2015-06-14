@@ -223,7 +223,7 @@ module.exports = React.createClass({
 
 
 		return <div>
-			<h1>System Exclusive</h1>
+			<h1><a href="/">System Exclusive</a></h1>
 
 			<AccountGroup userId = {this.props.userId} />
 
@@ -274,6 +274,7 @@ module.exports = React.createClass({
 				handlePlayClick = {this.handleInlinePlayClick}
 				handleInlineDownloadClick = {this.handleInlineDownloadClick}
 				handleInlineEditClick = {this.handleInlineEditClick}
+				updateSendProgram = {this.props.updateSendProgram}
 				/>
 
 			<h3>Controls</h3>

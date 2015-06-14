@@ -15,7 +15,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 	//var alter_sysex_table_query = client.query(
 	//	"ALTER TABLE sysex " +
 	//		"ADD COLUMN private		boolean DEFAULT FALSE, " +
-	//		"ADD COLUMN channel		text DEFAULT 0, " +
+	//		"ADD COLUMN channel		text DEFAULT 1, " +
 	//		"ADD COLUMN program		text DEFAULT 0 ",
 	//	function(err, result) {
 	//	console.log(err);
@@ -31,7 +31,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 	//		"title			text, " +
 	//		"user_id		text, " +
 	//		"private		boolean DEFAULT FALSE, " +
-	//		"channel		text DEFAULT 0, " +
+	//		"channel		text DEFAULT 1, " +
 	//		"program		text DEFAULT 0" +
 	//	")",
 	//	function(err, result) {

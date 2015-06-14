@@ -6,8 +6,8 @@ module.exports = React.createClass({
 	},
 
 	render:function(){
-		return <select onChange={this.onChangeHandler} className={this.props.className +" form-control"}>
-				<option value="false">{this.props.initialText}</option>
+		return <select onChange={this.onChangeHandler} className={this.props.className +" form-control"} name={this.props.className}>
+				{typeof this.props.initialText != 'undefined' ? <option value="false">{this.props.initialText}</option> : ""}
 				{this.props.items.map(function(result) {
 					//console.log(this.props.initialInput);
 					return <option value={result.id} selected={this.props.initialInput == result.id}>{result.text}</option>

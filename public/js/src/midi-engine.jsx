@@ -37,6 +37,8 @@ module.exports = React.createClass({
 			detailData: undefined,
 			isDetail: false,
 			inlinePlayText: false,
+			sendProgram: 0,
+			channel: 1,
 			oldSysex: [],
 			sysex: []
 		}
@@ -46,6 +48,13 @@ module.exports = React.createClass({
 		Cookie.remove('u');
 		this.setState({
 			userId:undefined
+		});
+	},
+
+	updateSendProgram: function(channel, program){
+		this.setState({
+			sendProgram: program,
+			channel: channel
 		});
 	},
 
@@ -165,6 +174,17 @@ module.exports = React.createClass({
 		if(typeof this.state.output != 'undefined'){
 			for(var i = 0; i < data.length; i++){
 				this.state.output.send(data[i]);
+
+				// End of Sysex Message, do a callback?
+				if(i == data.length-1 && this.state.sendProgram > 0 && this.state.sendProgram != 'false'){
+					var channel = parseInt(this.state.channel) + 191;
+					channel = "0x" + parseInt(channel).toString(16);
+
+					var program = 0;
+					program = "0x" + (parseInt(this.state.sendProgram)-1).toString(16);
+
+					this.state.output.send([channel, program]);
+				}
 			}
 		} else {
 			console.log('alert user to select an output');
@@ -186,7 +206,8 @@ module.exports = React.createClass({
 			return;
 		}
 
-		var title='', description='', id='';
+		var title='', description='', id='', program='', channel='';
+
 		input.map(function(item, index){
 			if(item.name == 'save-id'){
 				id = item.value;
@@ -196,6 +217,12 @@ module.exports = React.createClass({
 			}
 			if(item.name == 'save-description'){
 				description = item.value;
+			}
+			if(item.name == 'save-program'){
+				program = item.value;
+			}
+			if(item.name == 'save-channel'){
+				channel = item.value;
 			}
 		});
 
@@ -227,6 +254,8 @@ module.exports = React.createClass({
 				data: JSON.stringify({
 					description: description,
 					title: title,
+					program: program,
+					channel: channel,
 					id: id
 				}),
 				beforeSend: function(){
@@ -250,6 +279,8 @@ module.exports = React.createClass({
 				data: JSON.stringify({
 					description: description,
 					title: title,
+					program: program,
+					channel: channel,
 					user_id: this.state.user_id,
 					data: normalArray
 				}),
@@ -408,6 +439,17 @@ module.exports = React.createClass({
 
 	midiInputHandler: function(event){
 		//console.log(event.data[0]);
+
+		// Program Change, channel 1-16
+		if(event.data[0] >= 192 && event.data[0] <= 207){
+			var channel = event.data[0] - 191;
+			var program = event.data[1];
+
+			console.log([channel, program]);
+
+			return;
+		}
+
 		// Clock Signals
 		if(event.data[0] == 250){
 			this.clockCount = 1;
@@ -493,6 +535,7 @@ module.exports = React.createClass({
 			detailData= {this.state.detailData}
 			isDetail= {this.state.isDetail}
 			inlinePlayText= {this.state.inlinePlayText}
+			updateSendProgram= {this.updateSendProgram}
 			/>;
 	}
 });

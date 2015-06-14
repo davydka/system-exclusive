@@ -16,6 +16,10 @@ module.exports = React.createClass({
 
 	handleInlinePlayClick: function(index){
 		var id = this.props.serverSysex[index].id;
+		var program = this.props.serverSysex[index].program;
+		var channel = this.props.serverSysex[index].channel;
+
+		this.props.updateSendProgram(channel, program);
 
 		if(typeof this.props.output == 'undefined'){
 			$('.output-holder').addClass('bg-warning');
@@ -155,6 +159,8 @@ module.exports = React.createClass({
 					<td>{item.id}</td>
 					<td>{item.title}</td>
 					<td>{item.description}</td>
+					<td>{item.channel}</td>
+					<td>{item.program}</td>
 					<td>
 						<div className="table-controls">
 							{playButton}
@@ -184,6 +190,8 @@ module.exports = React.createClass({
 						<th>ID</th>
 						<th>Title</th>
 						<th>Description</th>
+						<th>Channel</th>
+						<th>Program</th>
 						<th>
 
 						</th>
