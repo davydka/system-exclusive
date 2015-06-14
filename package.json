@@ -16,7 +16,8 @@
     "querystring": "^0.2.0",
     "react-cookie": "^0.1.8",
     "sizeof": "^1.0.0",
-    "string": "^3.1.1"
+    "string": "^3.1.1",
+    "tinycolor2": "^1.1.2"
   },
   "devDependencies": {
     "browserify": "^10.1.0",

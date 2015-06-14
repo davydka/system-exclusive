@@ -1,5 +1,6 @@
 var React	= require('react');
 var Sizeof	= require('sizeof');
+var TinyColor = require('tinycolor2');
 
 var Select			= require('../components/select');
 var Dial			= require('../components/dial');
@@ -22,9 +23,7 @@ module.exports = React.createClass({
 		return {
 			messageTitle: '',
 			messageBody: '',
-			modalData: this.props.sysex,
-			sizeX: this.getRandomInt(0,9),
-			sizeY: this.getRandomInt(0,9)
+			modalData: this.props.sysex
 		}
 	},
 
@@ -42,6 +41,7 @@ module.exports = React.createClass({
 
 	componentDidUpdate: function(){
 		var canvas = $('#visualization');
+		var color = TinyColor.random().toRgb();
 
 		if(canvas.length && this.props.serverSysex.length && this.props.sysex.length){
 			canvas = canvas[0];
@@ -55,14 +55,11 @@ module.exports = React.createClass({
 					var x = index1 % canvas.width;
 					var y = (index1 - x) / canvas.width;
 
-					//context.fillStyle = "#000";
-					//console.log(item1);
-					context.fillStyle = 'rgb(' + item1 + ',0 , 0)';
-					//context.fillStyle = 'rgb(255, 0 , 0)';
+					context.fillStyle = 'rgb(' + item1 + ','+ color.g +', '+ color.b +')';
 
 					context.fillRect(x, y, 1, 1);
-				});
-			});
+				}.bind(this));
+			}.bind(this));
 
 		}
 	},
@@ -180,9 +177,6 @@ module.exports = React.createClass({
 		var details = null;
 
 		if(typeof this.props.detailData != 'undefined' && !this.props.recording && this.props.isDetail){
-			var kittenString = "https://placekitten.com/41"+this.state.sizeX+"/30"+this.state.sizeY;
-
-
 
 			var buttonSaveOrEdit = <button ref="editButton" onClick={this.handleEditClick} className="btn btn-default edit">
 				<span className="glyphicon glyphicon-pencil" ></span>
