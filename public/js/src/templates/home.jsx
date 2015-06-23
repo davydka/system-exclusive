@@ -280,7 +280,6 @@ module.exports = React.createClass({
 				updateSendProgram = {this.props.updateSendProgram}
 				/>
 
-			<h3>Controls</h3>
 			<PanelMain></PanelMain>
 
 			<ModalAlert title={this.state.messageTitle} body={this.state.messageBody}></ModalAlert>

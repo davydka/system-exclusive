@@ -4,8 +4,12 @@ var Panel 			= require('../components/panel');
 
 module.exports = React.createClass({
 	render:function(){
+
+		return false;
+
 		return <div className="panel-main panel-container">
 
+				<h3>Controls</h3>
 				<Panel
 					panelTitle="LFO"
 					panelClassName="panel-moog panel-lfo"
